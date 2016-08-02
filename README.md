@@ -16,8 +16,8 @@ github "Parallaxer/Parallaxer"
 ## Overview
 
 Parallax effects are achieved by composing a tree of `ParallaxEffect` objects,
-referred to hereafter as a *parallax tree*. Below is a brief description of the types used
-to construct nodes in a parallax tree. See source files for more documentation.
+or *parallax tree*. Below is a brief description of the types used to construct
+nodes in a parallax tree. See source files for more documentation.
 
 - `ParallaxEffect`:
     - A node in a parallax tree. 
@@ -53,7 +53,7 @@ print(percentage) // Output: 50.0
 ### [PhotoBook](https://github.com/Parallaxer/PhotoBook) example project
 
 Check out [PhotoBook](https://github.com/Parallaxer/PhotoBook), an example project which showcases
-the Parallaxer framework; it's much more interesting than the percentage example, I promise.
+the Parallaxer framework.
 
 ## License
 
