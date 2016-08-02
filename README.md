@@ -13,6 +13,13 @@ Parallaxer is a framework for crafting parallax effects in Swift.
 github "Parallaxer/Parallaxer"
 ```
 
+#### With [CocoaPods v1.1.0.beta](https://github.com/CocoaPods/CocoaPods)
+
+```
+use_frameworks!
+pod 'Parallaxer', :git => 'https://github.com/Parallaxer/Parallaxer.git'
+```
+
 ## Overview
 
 Parallax effects are achieved by composing a tree of `ParallaxEffect` objects,
