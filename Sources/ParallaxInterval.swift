@@ -32,7 +32,7 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
 extension ParallaxInterval: Hashable {
     
     public var hashValue: Int {
-        return self.from.hashValue ^ self.to.hashValue
+        return self.from.hashValue << sizeof(ValueType.self) ^ self.to.hashValue
     }
 }
 

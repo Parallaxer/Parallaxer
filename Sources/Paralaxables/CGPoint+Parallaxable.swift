@@ -21,6 +21,6 @@ extension CGPoint: Parallaxable {
 extension CGPoint: Hashable {
     
     public var hashValue: Int {
-        return self.x.hashValue ^ self.y.hashValue
+        return self.x.hashValue << sizeof(CGFloat.self) ^ self.y.hashValue
     }
 }
