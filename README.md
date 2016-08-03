@@ -47,12 +47,13 @@ var percentage: Double?
 
 // Define an effect that expresses a value as a percentage of its parent interval.
 let calculatePercentage = ParallaxEffect<Double>(
-    interval: ParallaxInterval(from: 0, to: 100),
-    onChange: { percentage = $0 }
+    over:   ParallaxInterval(from: 0, to: 100),
+    change: { percentage = $0 }
 )
 
-var root = ParallaxEffect(interval: ParallaxInterval(from: 0, to: 4))
+var root = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
 root.addEffect(calculatePercentage)
+
 root.seed(withValue: 2)
 print(percentage) // Output: 50.0
 ```

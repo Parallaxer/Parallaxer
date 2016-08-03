@@ -3,7 +3,7 @@ import Foundation
 private let kPi: Double = 3.14159265359
 
 /**
- Specifies how a `ParallaxEffect` transforms progress inheritted from its parent.
+ Specifies how a `ParallaxEffect` transforms progress inherited from its parent.
  
  - linear:      No change.
  - easeInOut:   Progress is slow at the beginning and end of the interval.

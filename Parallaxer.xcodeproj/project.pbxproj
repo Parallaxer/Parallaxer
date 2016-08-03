@@ -38,7 +38,8 @@
 		AF8921EF1D4EA11D0052BC84 /* CGPoint+Parallaxable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Parallaxable.swift"; sourceTree = "<group>"; };
 		AF8921F01D4EA11D0052BC84 /* Float+Parallaxable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Parallaxable.swift"; sourceTree = "<group>"; };
 		AFA3BD2A1D4BCFA2009E8F22 /* Parallaxable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parallaxable.swift; sourceTree = "<group>"; };
-		AFEEE9451D42C95400E76143 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AFB18E691D552481007534A5 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		AFB18E6A1D552481007534A5 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		AFEEE9461D42CBAF00E76143 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AFFCA1AF1D45EC21003B8802 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		AFFCA1B01D45EC21003B8802 /* UniversalFramework_Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Base.xcconfig; sourceTree = "<group>"; };
@@ -68,7 +69,8 @@
 		AF2A36171D42A0BE0046B6C8 = {
 			isa = PBXGroup;
 			children = (
-				AFEEE9451D42C95400E76143 /* LICENSE */,
+				AFB18E691D552481007534A5 /* CHANGELOG.md */,
+				AFB18E6A1D552481007534A5 /* LICENSE.md */,
 				AFEEE9461D42CBAF00E76143 /* README.md */,
 				AF2A36461D42A78D0046B6C8 /* Sources */,
 				AF2A363B1D42A7630046B6C8 /* Tests */,
