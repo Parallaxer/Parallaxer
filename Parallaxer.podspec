@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name                      = "Parallaxer"
-  s.version                   = "1.0.0"
-  s.summary                   = "A Swift library for composing parallax effects."
+  s.version                   = "2.0.0"
+  s.summary                   = "A framework for composing parallax effects in Swift."
   s.homepage                  = "https://github.com/Parallaxer/Parallaxer"
   s.license                   = "MIT"
   s.author                    = { "Clifton Roberts" => "clifton.roberts@me.com" }
