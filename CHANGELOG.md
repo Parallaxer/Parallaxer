@@ -2,6 +2,20 @@
 
 ### Breaking
 
+- None
+
+### Enhancements
+
+- None
+
+### Bug Fixes
+
+- None
+
+# 2.0.0
+
+### Breaking
+
 - API changes:
   [#1](https://github.com/Parallaxer/Parallaxer/pull/1)
     - `onChange` is now `change`
