@@ -15,8 +15,8 @@ private protocol ParallaxInheritable {
  A root effect is responsible for seeding the parallax tree. See `seed(withValue:)`.
  
  As a root behavior's value changes, progress over its interval is calculated and inherited by its nested
- effects. The nested effects use the inheritted progress to express values relative to their own interval;
- one may subscribe to these values and use them to update other properties. See `onChange`.
+ effects. The nested effects use the inherited progress to express values relative to their own interval;
+ one may subscribe to these values and use them to update other properties. See `change`.
  */
 public struct ParallaxEffect<ValueType: Parallaxable> {
     
@@ -24,29 +24,29 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     public typealias Subinterval = ParallaxInterval<Double>
     
     /// Closure that is called whenever `self` expresses a value.
-    public var onChange: ((newValue: ValueType) -> Void)?
+    public var change: ((newValue: ValueType) -> Void)?
 
     private let interval: ParallaxInterval<ValueType>
     private let clampsInheritedProgress: Bool
-    private let inheritedProgressTransform: ParallaxCurve
+    private let progressCurve: ParallaxCurve
     private var inheritors = [Subinterval: [ParallaxInheritable]]()
 
     /**
      Initialize a `ParallaxEffect`, a node in a parallax tree.
      
-     - parameter interval:          The interval over which change is expected.
-     - parameter progressCurve:     How inherited progress is transformed. Default is `.linear`.
-     - parameter isClamped:         Whether inheritted progress is clamped to the unit interval before it is
-                                    transformed by `progressCurve`. Default is `false`.
-     - parameter onChange:          Closure that is called whenever the effect expresses a new value.
+     - parameter interval:  The interval over which change is expected.
+     - parameter curve:     How inherited progress is transformed. Default is `.linear`.
+     - parameter clamped:   Whether inherited progress is clamped to the unit interval before it is
+                            transformed by `curve`. Default is `false`.
+     - parameter change:    Closure that is called whenever the effect expresses a new value.
      */
-    public init(interval: ParallaxInterval<ValueType>, progressCurve: ParallaxCurve = .linear,
-                isClamped: Bool = false, onChange: ((ValueType) -> Void)? = nil)
+    public init(over interval: ParallaxInterval<ValueType>, curve: ParallaxCurve = .linear,
+                clamped: Bool = false, change: ((ValueType) -> Void)? = nil)
     {
         self.interval = interval
-        self.onChange = onChange
-        self.inheritedProgressTransform = progressCurve
-        self.clampsInheritedProgress = isClamped
+        self.change = change
+        self.progressCurve = curve
+        self.clampsInheritedProgress = clamped
     }
     
     /**
@@ -57,7 +57,7 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
                                 specified over the unit interval [0, 1]. Default is the unit interval.
      */
     public mutating func addEffect<NestedValueType: Parallaxable>(_ effect: ParallaxEffect<NestedValueType>,
-                                   subinterval: Subinterval? = nil)
+                                   toSubinterval subinterval: Subinterval? = nil)
     {
         let interval = subinterval ?? kUnitInterval
         var inheritors = self.inheritors[interval] ?? [ParallaxInheritable]()
@@ -68,7 +68,7 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     /**
      Seed the parallax tree. Call this method on the root effect whenever its value should change.
      
-     - note: Triggers `onChange` in the root and nested effects.
+     - note: Triggers `change` in the root and nested effects.
      
      - parameter value: The seed value from which all other values in the parallax tree shall be determined.
      */
@@ -88,12 +88,12 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     }
     
     private func expressValueIfNeeded(forProgress progress: Double) {
-        guard let onChange = self.onChange else {
+        guard let change = self.change else {
             return
         }
 
         let value = self.interval.value(forProgress: progress)
-        onChange(newValue: value)
+        change(newValue: value)
     }
     
     private func translateProgress(_ progress: Double, overSubinterval subinterval: Subinterval) -> Double {
@@ -108,8 +108,8 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
 extension ParallaxEffect: ParallaxInheritable {
     
     private func inheritProgress(_ progress: Double) {
-        let clamped = self.clampsInheritedProgress ? min(1, max(0, progress)) : progress
-        let progress = self.inheritedProgressTransform.transform(progress: clamped)
-        self.setProgress(progress)
+        let progress = self.clampsInheritedProgress ? min(1, max(0, progress)) : progress
+        let transformed = self.progressCurve.transform(progress: progress)
+        self.setProgress(transformed)
     }
 }

@@ -1,0 +1,23 @@
+# Master
+
+### Breaking
+
+- API changes:
+  [#1](https://github.com/Parallaxer/Parallaxer/pull/1)
+    - `onChange` is now `change`
+    - `ParallaxEffect(interval:progressCurve:isClamped:onChange:)` shortened to
+      `ParallaxEffect(over:curve:clamped:change:)`
+    - `addEffect(subinterval:)` is now `addEffect(toSubinterval:)`
+
+### Enhancements
+
+- Cleaned up tests.
+  [#1](https://github.com/Parallaxer/Parallaxer/pull/1)
+
+### Bug Fixes
+
+- None
+
+# 1.0.0
+
+First release.
