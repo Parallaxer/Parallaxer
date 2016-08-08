@@ -6,7 +6,8 @@
 
 ### Enhancements
 
-- None
+- Update tests such that generic types are specified implicitly.
+  [#3](https://github.com/Parallaxer/Parallaxer/pull/3)
 
 ### Bug Fixes
 

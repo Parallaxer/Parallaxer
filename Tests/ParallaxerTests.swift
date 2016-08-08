@@ -5,9 +5,9 @@ class ParallaxerTests: XCTestCase {
     
     func testSeedWithValue() {
         var number: Double?
-        let effect = ParallaxEffect<Double>(
+        let effect = ParallaxEffect(
             over:   ParallaxInterval(from: 0, to: 10),
-            change: { number = $0 }
+            change: { number = $0 as Double }
         )
         
         effect.seed(withValue: 3)
@@ -28,9 +28,9 @@ class ParallaxerTests: XCTestCase {
     
     func testUnclampedEffect() {
         var percentage: Double?
-        let makePercentage = ParallaxEffect<Double>(
+        let makePercentage = ParallaxEffect(
             over:   ParallaxInterval(from: 0, to: 100),
-            change: { percentage = $0 }
+            change: { percentage = $0 as Double }
         )
         
         var controller = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
@@ -48,10 +48,10 @@ class ParallaxerTests: XCTestCase {
     
     func testClampedEffect() {
         var percentage: Double?
-        let makePercentageClamped = ParallaxEffect<Double>(
+        let makePercentageClamped = ParallaxEffect(
             over:       ParallaxInterval(from: 0, to: 100),
             clamped:    true,
-            change:     { percentage = $0 }
+            change:     { percentage = $0 as Double }
         )
         
         var controller = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
@@ -69,9 +69,9 @@ class ParallaxerTests: XCTestCase {
     
     func testUnclampedEffectOverSubinterval() {
         var percentage: Double?
-        let makePercentage = ParallaxEffect<Double>(
+        let makePercentage = ParallaxEffect(
             over:   ParallaxInterval(from: 0, to: 100),
-            change: { percentage = $0 }
+            change: { percentage = $0 as Double }
         )
         
         var controller = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
@@ -95,10 +95,10 @@ class ParallaxerTests: XCTestCase {
     
     func testClampedEffectOverSubinterval() {
         var percentage: Double?
-        let makePercentage = ParallaxEffect<Double>(
+        let makePercentage = ParallaxEffect(
             over:       ParallaxInterval(from: 0, to: 100),
             clamped:    true,
-            change:     { percentage = $0 }
+            change:     { percentage = $0 as Double }
         )
         
         var controller = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
@@ -127,9 +127,9 @@ class ParallaxerTests: XCTestCase {
         //              -> changePoint (ParallaxEffect<CGPoint>)
 
         var percentage: Double?
-        let makePercentage = ParallaxEffect<Double>(
+        let makePercentage = ParallaxEffect(
             over:   ParallaxInterval(from: 0, to: 100),
-            change: { percentage = $0 }
+            change: { percentage = $0 as Double }
         )
         
         var point: CGPoint?
@@ -162,9 +162,9 @@ class ParallaxerTests: XCTestCase {
         var percentage: Double?
         
         // Define an effect that expresses a value as a percentage of its parent interval.
-        let calculatePercentage = ParallaxEffect<Double>(
+        let calculatePercentage = ParallaxEffect(
             over:   ParallaxInterval(from: 0, to: 100),
-            change: { percentage = $0 }
+            change: { percentage = $0 as Double }
         )
         
         var root = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
