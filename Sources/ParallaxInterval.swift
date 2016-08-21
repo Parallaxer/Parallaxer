@@ -3,8 +3,8 @@
  */
 public struct ParallaxInterval<ValueType: Parallaxable> {
     
-    private let from: ValueType
-    private let to: ValueType
+    fileprivate let from: ValueType
+    fileprivate let to: ValueType
 
     /**
      Initialize a `ParallaxInterval`, which defines a bidirectional interval.
@@ -32,7 +32,7 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
 extension ParallaxInterval: Hashable {
     
     public var hashValue: Int {
-        return self.from.hashValue << sizeof(ValueType.self) ^ self.to.hashValue
+        return self.from.hashValue << MemoryLayout<ValueType>.size ^ self.to.hashValue
     }
 }
 

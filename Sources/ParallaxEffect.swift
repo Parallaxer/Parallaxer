@@ -24,11 +24,11 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     public typealias Subinterval = ParallaxInterval<Double>
     
     /// Closure that is called whenever `self` expresses a value.
-    public var change: ((newValue: ValueType) -> Void)?
+    public var change: ((ValueType) -> Void)?
 
     private let interval: ParallaxInterval<ValueType>
-    private let clampsInheritedProgress: Bool
-    private let progressCurve: ParallaxCurve
+    fileprivate let clampsInheritedProgress: Bool
+    fileprivate let progressCurve: ParallaxCurve
     private var inheritors = [Subinterval: [ParallaxInheritable]]()
 
     /**
@@ -79,7 +79,7 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     
     // MARK: Private functions
     
-    private func setProgress(_ progress: Double) {
+    fileprivate func setProgress(_ progress: Double) {
         self.expressValueIfNeeded(forProgress: progress)
         for (subinterval, inheritors) in self.inheritors {
             let progress = self.translateProgress(progress, overSubinterval: subinterval)
@@ -93,7 +93,7 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
         }
 
         let value = self.interval.value(forProgress: progress)
-        change(newValue: value)
+        change(value)
     }
     
     private func translateProgress(_ progress: Double, overSubinterval subinterval: Subinterval) -> Double {
@@ -107,7 +107,7 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
 
 extension ParallaxEffect: ParallaxInheritable {
     
-    private func inheritProgress(_ progress: Double) {
+    fileprivate func inheritProgress(_ progress: Double) {
         let progress = self.clampsInheritedProgress ? min(1, max(0, progress)) : progress
         let transformed = self.progressCurve.transform(progress: progress)
         self.setProgress(transformed)

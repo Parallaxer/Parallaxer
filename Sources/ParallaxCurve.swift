@@ -15,7 +15,7 @@ public enum ParallaxCurve {
     case linear
     case easeInOut
     case oscillate(numberOfTimes: Double)
-    case custom((progress: Double) -> Double)
+    case custom((Double) -> Double)
     
     func transform(progress: Double) -> Double {
         switch self {
@@ -25,8 +25,8 @@ public enum ParallaxCurve {
                 return 0.5 * (1 - cos(progress * kPi))
             case .oscillate(let numberOfTimes):
                 return 0.5 * (1 - cos(progress * 2 * numberOfTimes * kPi))
-            case .custom(let transform):
-                return transform(progress: progress)
+            case .custom(let customTransform):
+                return customTransform(progress)
         }
     }
 }
