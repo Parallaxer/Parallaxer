@@ -2,7 +2,7 @@
 
 ### Breaking
 
-- None
+- Support for Swift in Xcode v8 beta 6.
 
 ### Enhancements
 
