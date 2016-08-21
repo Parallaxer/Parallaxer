@@ -2,7 +2,22 @@
 
 ### Breaking
 
+- None
+
+### Enhancements
+
+- None
+
+### Bug Fixes
+
+- None
+
+# 2.1.0
+
+### Breaking
+
 - Support for Swift in Xcode v8 beta 6.
+  [#4](https://github.com/Parallaxer/Parallaxer/pull/4)
 
 ### Enhancements
 
