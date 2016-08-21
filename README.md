@@ -3,7 +3,7 @@
 Parallaxer is a framework for crafting parallax effects in Swift.
 
 ## Requirements
-- Swift 3.0
+- Swift 3.0, Xcode 8 beta 6
 
 ## Installation
 
