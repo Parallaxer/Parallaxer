@@ -6,7 +6,8 @@
 
 ### Enhancements
 
-- None
+- Updated `README` with Cocoapods integration and Swift 3.0 requirement.
+  [#6](https://github.com/Parallaxer/Parallaxer/pull/6)
 
 ### Bug Fixes
 
