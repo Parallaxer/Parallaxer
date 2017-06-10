@@ -3,7 +3,7 @@
 Parallaxer is a framework for crafting parallax effects in Swift.
 
 ## Requirements
-- Swift 3.0
+- Swift 4.0
 
 ## Installation
 
@@ -47,11 +47,11 @@ var percentage: Double?
 
 // Define an effect that expresses a value as a percentage of its parent interval.
 let calculatePercentage = ParallaxEffect(
-    over:   ParallaxInterval(from: 0, to: 100),
-    change: { percentage = $0 as Double }
+    interval: ParallaxInterval(from: 0, to: 100),
+    change:   { percentage = $0 as Double }
 )
 
-var root = ParallaxEffect(over: ParallaxInterval(from: 0, to: 4))
+var root = ParallaxEffect(interval: ParallaxInterval(from: 0, to: 4))
 root.addEffect(calculatePercentage)
 
 root.seed(withValue: 2)
