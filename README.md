@@ -29,7 +29,7 @@ nodes in a parallax tree. See source files for more documentation.
 - `ParallaxEffect`:
     - A node in a parallax tree. 
     - Values are set, or seeded, at the root.
-    - Nested effects express values in relation to their parent.
+    - Nested effects express values relative to their parent.
 
 - `ParallaxInterval`:
     - A bidirectional interval with boundaries such that `from != to`.
