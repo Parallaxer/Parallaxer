@@ -2,7 +2,7 @@
 
 ### Breaking
 
-- None
+- Modernized code and project for Swift 4.0.
 
 ### Enhancements
 
