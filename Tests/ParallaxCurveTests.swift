@@ -19,9 +19,9 @@ class ParallaxCurveTests: XCTestCase {
     func testEaseInOutTransform() {
         let ease = ParallaxCurve.easeInOut
         XCTAssertEqual(ease.transform(progress: -1), 1)
-        XCTAssertEqualWithAccuracy(ease.transform(progress: -0.5), 0.5, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(ease.transform(progress: -0.5), 0.5, accuracy: Double(Float.ulpOfOne))
         XCTAssertEqual(ease.transform(progress: 0), 0)
-        XCTAssertEqualWithAccuracy(ease.transform(progress: 0.5), 0.5, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(ease.transform(progress: 0.5), 0.5, accuracy: Double(Float.ulpOfOne))
         XCTAssertEqual(ease.transform(progress: 1), 1)
     }
     
