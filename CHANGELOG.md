@@ -2,7 +2,22 @@
 
 ### Breaking
 
+- None
+
+### Enhancements
+
+- None
+
+### Bug Fixes
+
+- None
+
+# 3.0.0
+
+### Breaking
+
 - Modernized code and project for Swift 4.0.
+  [#7](https://github.com/Parallaxer/Parallaxer/pull/7)
 
 ### Enhancements
 
