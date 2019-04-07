@@ -6,7 +6,7 @@
 
 ### Enhancements
 
-- None
+- Modernized project for Swift 4.2.
 
 ### Bug Fixes
 
