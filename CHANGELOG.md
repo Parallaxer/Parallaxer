@@ -6,6 +6,20 @@
 
 ### Enhancements
 
+- None
+
+### Bug Fixes
+
+- None
+
+# 3.0.1
+
+### Breaking
+
+- None
+
+### Enhancements
+
 - Modernized project for Swift 4.2.
 
 ### Bug Fixes

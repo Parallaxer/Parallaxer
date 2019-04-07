@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.source                    = { :git => "https://github.com/Parallaxer/Parallaxer.git",
                                   :tag => s.version.to_s }
-  s.requires_arc              = true
+  s.swift_version             = "4.2"
   s.source_files              = "Sources/**/*.swift"
   s.module_name               = "Parallaxer"
 end
