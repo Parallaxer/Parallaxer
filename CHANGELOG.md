@@ -12,6 +12,20 @@
 
 - None
 
+# 3.0.2
+
+### Breaking
+
+- None
+
+### Enhancements
+
+- None
+
+### Bug Fixes
+
+- Fix wrong version number in podspec.
+
 # 3.0.1
 
 ### Breaking
