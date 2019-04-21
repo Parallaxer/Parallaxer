@@ -1,6 +1,16 @@
 PODS:
-  - Parallaxer (4.0.0)
+  - Parallaxer (4.0.0):
+    - Parallaxer/Core (= 4.0.0)
+  - Parallaxer/Base (4.0.0)
+  - Parallaxer/Core (4.0.0):
+    - Parallaxer/Base
+    - Parallaxer/Rx
+  - Parallaxer/Rx (4.0.0):
+    - RxCocoa
+    - RxSwift
   - RxBlocking (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.5.0)
   - RxTest (4.5.0):
@@ -9,12 +19,14 @@ PODS:
 DEPENDENCIES:
   - Parallaxer (from `../`)
   - RxBlocking
+  - RxCocoa
   - RxSwift
   - RxTest
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - RxBlocking
+    - RxCocoa
     - RxSwift
     - RxTest
 
@@ -23,11 +35,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Parallaxer: 6dbb8429a40a03fd4c42c17aeb903eb175869ed9
+  Parallaxer: b9282af01b2c92220fce49445811259a44a1dcf8
   RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
 
-PODFILE CHECKSUM: a774dff8a0c995f763c4f327578b057f05d58c68
+PODFILE CHECKSUM: d89c608a8cc35962cacd55a98eb349c4e50ae113
 
 COCOAPODS: 1.6.1

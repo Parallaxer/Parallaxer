@@ -9,6 +9,24 @@ Pod::Spec.new do |s|
   s.source                    = { :git => "https://github.com/Parallaxer/Parallaxer.git",
                                   :tag => s.version.to_s }
   s.swift_version             = "4.2"
-  s.source_files              = "Sources/**/*.swift"
-  s.module_name               = "Parallaxer"
+
+  s.default_subspec           = "Core"
+
+  ### All functionality, with external dependencies.
+  s.subspec "Core" do |ss|
+    ss.dependency "Parallaxer/Base"
+    ss.dependency "Parallaxer/Rx"
+  end
+
+  ### Base Parallaxer implementation, without external dependencies.
+  s.subspec "Base" do |ss|
+    ss.source_files = "Sources/Base/**/*.swift"
+  end
+
+  ### RxSwift integration
+  s.subspec "Rx" do |ss|
+    ss.dependency "RxSwift"
+    ss.dependency "RxCocoa"
+    ss.source_files = "Sources/Rx/**/*.swift"
+  end
 end
