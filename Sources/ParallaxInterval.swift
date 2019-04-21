@@ -37,8 +37,9 @@ extension ParallaxInterval: Equatable {
 }
 
 extension ParallaxInterval: Hashable {
-    
-    public var hashValue: Int {
-        return from.hashValue << MemoryLayout<ValueType>.size ^ to.hashValue
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(from)
+        hasher.combine(to)
     }
 }

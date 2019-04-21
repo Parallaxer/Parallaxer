@@ -19,8 +19,9 @@ extension CGPoint: Parallaxable {
 }
 
 extension CGPoint: Hashable {
-    
-    public var hashValue: Int {
-        return self.x.hashValue << MemoryLayout<CGFloat>.size ^ self.y.hashValue
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
     }
 }

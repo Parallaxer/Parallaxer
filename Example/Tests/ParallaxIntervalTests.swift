@@ -1,7 +1,7 @@
 @testable import Parallaxer
 import XCTest
 
-class ParallaxIntervalTests: XCTestCase {
+final class ParallaxIntervalTests: XCTestCase {
 
     func testValue() {
         let interval = ParallaxInterval(from: 0, to: 10)

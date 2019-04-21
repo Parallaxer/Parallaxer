@@ -1,7 +1,7 @@
 @testable import Parallaxer
 import XCTest
 
-class ParallaxCurveTests: XCTestCase {
+final class ParallaxCurveTests: XCTestCase {
 
     func testLinearTransform() {
         let linear = ParallaxCurve.linear

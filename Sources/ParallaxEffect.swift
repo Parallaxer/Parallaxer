@@ -35,8 +35,10 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     ///   - isClamped:  Whether inherited progress is clamped to the unit interval before it is transformed
     ///                 by `curve`. Default is `false`.
     ///   - change:     Closure that is called whenever the effect expresses a new value.
-    public init(interval: ParallaxInterval<ValueType>, curve: ParallaxCurve = .linear,
-                isClamped: Bool = false, change: ((ValueType) -> Void)? = nil)
+    public init(interval: ParallaxInterval<ValueType>,
+                curve: ParallaxCurve = .linear,
+                isClamped: Bool = false,
+                change: ((ValueType) -> Void)? = nil)
     {
         self.interval = interval
         self.change = change

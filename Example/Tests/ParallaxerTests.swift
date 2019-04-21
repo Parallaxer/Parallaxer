@@ -1,7 +1,7 @@
 import Parallaxer
 import XCTest
 
-class ParallaxerTests: XCTestCase {
+final class ParallaxerTests: XCTestCase {
     
     func testSeedWithValue() {
         var number: Double?

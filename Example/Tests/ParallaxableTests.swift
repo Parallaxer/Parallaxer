@@ -1,7 +1,7 @@
 @testable import Parallaxer
 import XCTest
 
-class ParallaxableTests: XCTestCase {
+final class ParallaxableTests: XCTestCase {
     
     func testCGFloatType() {
         let from: CGFloat = 8

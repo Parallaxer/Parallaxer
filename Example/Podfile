@@ -1,0 +1,19 @@
+platform :ios, "10.0"
+
+target "Example" do
+  use_frameworks!
+
+    # Internal pods.
+    pod "Parallaxer", :path => "../"
+
+    # External pods.
+    pod "RxSwift"
+
+  target "Tests" do
+    inherit! :search_paths
+    
+    # External pods.
+    pod "RxTest"
+    pod "RxBlocking"
+  end
+end
