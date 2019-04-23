@@ -169,8 +169,20 @@ final class ParallaxerTests: XCTestCase {
         
         var root = ParallaxEffect(interval: ParallaxInterval(from: 0, to: 4))
         root.addEffect(calculatePercentage)
-        
+
+        root.seed(withValue: 0)
+        XCTAssertEqual(percentage, 0)
+
+        root.seed(withValue: 1)
+        XCTAssertEqual(percentage, 25)
+
         root.seed(withValue: 2)
         XCTAssertEqual(percentage, 50)
+
+        root.seed(withValue: 3)
+        XCTAssertEqual(percentage, 75)
+
+        root.seed(withValue: 4)
+        XCTAssertEqual(percentage, 100)
     }
 }

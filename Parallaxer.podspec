@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage                  = "https://github.com/Parallaxer/Parallaxer"
   s.license                   = "MIT"
   s.author                    = { "Clifton Roberts" => "clifton.roberts@me.com" }
-  s.ios.deployment_target     = "10.0"
+  s.ios.deployment_target     = "9.0"
   s.source                    = { :git => "https://github.com/Parallaxer/Parallaxer.git",
                                   :tag => s.version.to_s }
   s.swift_version             = "4.2"

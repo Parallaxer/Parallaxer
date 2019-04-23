@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B1793DAA06BF26963E02A22 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA465713D640469C7CCFF889 /* Pods_Example.framework */; };
 		459AA4B017AA8F5F9BE24B46 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD82554D6844B8B3F25FF332 /* Pods_Tests.framework */; };
+		841E2CC1226EB07400FB2D31 /* RxParallaxerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E2CC0226EB07400FB2D31 /* RxParallaxerTests.swift */; };
+		841E2CCD226EB3E400FB2D31 /* RxTest+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E2CCC226EB3E400FB2D31 /* RxTest+Additions.swift */; };
 		8466486B226D2C8900214770 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466486A226D2C8900214770 /* AppDelegate.swift */; };
 		8466486D226D2C8900214770 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466486C226D2C8900214770 /* ViewController.swift */; };
 		84664870226D2C8900214770 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8466486E226D2C8900214770 /* Main.storyboard */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		1C288992DD405F50AC1B37FA /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		3375AD9C44370E17557E057F /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		841E2CC0226EB07400FB2D31 /* RxParallaxerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxParallaxerTests.swift; sourceTree = "<group>"; };
+		841E2CCC226EB3E400FB2D31 /* RxTest+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxTest+Additions.swift"; sourceTree = "<group>"; };
 		84664867226D2C8900214770 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8466486A226D2C8900214770 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8466486C226D2C8900214770 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		841E2CC8226EB3B900FB2D31 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				841E2CCC226EB3E400FB2D31 /* RxTest+Additions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		8466485E226D2C8900214770 = {
 			isa = PBXGroup;
 			children = (
@@ -119,9 +131,11 @@
 		8466487E226D2C8A00214770 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				841E2CC8226EB3B900FB2D31 /* Extensions */,
 				8466489B226D2D0300214770 /* ParallaxableTests.swift */,
 				8466489D226D2D0300214770 /* ParallaxCurveTests.swift */,
 				8466489C226D2D0300214770 /* ParallaxerTests.swift */,
+				841E2CC0226EB07400FB2D31 /* RxParallaxerTests.swift */,
 				8466489A226D2D0300214770 /* ParallaxIntervalTests.swift */,
 				84664881226D2C8A00214770 /* Info.plist */,
 			);
@@ -350,9 +364,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841E2CCD226EB3E400FB2D31 /* RxTest+Additions.swift in Sources */,
 				8466489F226D2D0400214770 /* ParallaxableTests.swift in Sources */,
 				8466489E226D2D0400214770 /* ParallaxIntervalTests.swift in Sources */,
 				846648A1226D2D0400214770 /* ParallaxCurveTests.swift in Sources */,
+				841E2CC1226EB07400FB2D31 /* RxParallaxerTests.swift in Sources */,
 				846648A0226D2D0400214770 /* ParallaxerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -493,7 +509,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
