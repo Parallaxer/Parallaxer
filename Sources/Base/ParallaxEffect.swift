@@ -3,7 +3,7 @@ private let kUnitInterval = ParallaxInterval<Double>(from: 0, to: 1)
 /// A private protocol which allows nested parallax effects of varying types.
 private protocol ParallaxInheritable {
     
-    func inheritProgress(_ progress: Double)
+    func inheritProgress(_ position: Double)
 }
 
 /// A `ParallaxEffect` specifies an interval over which a change in value is expected; parallax effects are
@@ -11,8 +11,8 @@ private protocol ParallaxInheritable {
 ///
 /// A root effect is responsible for seeding the parallax tree. See `seed(withValue:)`.
 ///
-/// As a root behavior's value changes, progress over its interval is calculated and inherited by its nested
-/// effects. The nested effects use the inherited progress to express values relative to their own interval;
+/// As a root behavior's value changes, position over its interval is calculated and inherited by its nested
+/// effects. The nested effects use the inherited position to express values relative to their own interval;
 /// one may subscribe to these values and use them to update other properties. See `change`.
 public struct ParallaxEffect<ValueType: Parallaxable> {
     
@@ -31,8 +31,8 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     ///
     /// - Parameters:
     ///   - interval:   The interval over which change is expected.
-    ///   - curve:      How inherited progress is transformed. Default is `.linear`.
-    ///   - isClamped:  Whether inherited progress is clamped to the unit interval before it is transformed
+    ///   - curve:      How inherited position is transformed. Default is `.linear`.
+    ///   - isClamped:  Whether inherited position is clamped to the unit interval before it is transformed
     ///                 by `curve`. Default is `false`.
     ///   - change:     Closure that is called whenever the effect expresses a new value.
     public init(interval: ParallaxInterval<ValueType>,
@@ -46,11 +46,11 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
         self.isInheritedProgressClamped = isClamped
     }
     
-    /// Add a nested effect that shall inherit progress from `self`.
+    /// Add a nested effect that shall inherit position from `self`.
     ///
     /// - Parameters:
-    ///   - effect:         The effect to add, which shall inherit progress from `self`.
-    ///   - subinterval:    The subinterval over which `effect` shall inherit progress. Subintervals are
+    ///   - effect:         The effect to add, which shall inherit position from `self`.
+    ///   - subinterval:    The subinterval over which `effect` shall inherit position. Subintervals are
     ///                     specified over the unit interval [0, 1]. Default is the unit interval.
     public mutating func addEffect<NestedValueType>(_ effect: ParallaxEffect<NestedValueType>,
                                                     toSubinterval subinterval: Subinterval? = nil)
@@ -67,43 +67,43 @@ public struct ParallaxEffect<ValueType: Parallaxable> {
     ///
     /// - Parameter value: The seed from which all other values in the parallax tree shall be determined.
     public func seed(withValue value: ValueType) {
-        let progress = interval.progress(forValue: value)
-        setProgress(progress)
+        let position = interval.position(forValue: value)
+        setProgress(position)
     }
     
     // MARK: Private functions
     
-    private func setProgress(_ progress: Double) {
-        expressValueIfNeeded(forProgress: progress)
+    private func setProgress(_ position: Double) {
+        expressValueIfNeeded(forProgress: position)
         for (subinterval, inheritors) in inheritorsBySubinterval {
-            let progress = translateProgress(progress, overSubinterval: subinterval)
-            inheritors.forEach { $0.inheritProgress(progress) }
+            let position = translateProgress(position, overSubinterval: subinterval)
+            inheritors.forEach { $0.inheritProgress(position) }
         }
     }
     
-    private func expressValueIfNeeded(forProgress progress: Double) {
+    private func expressValueIfNeeded(forProgress position: Double) {
         guard let change = change else {
             return
         }
 
-        let value = interval.value(forProgress: progress)
+        let value = interval.value(atPosition: position)
         change(value)
     }
     
-    private func translateProgress(_ progress: Double, overSubinterval subinterval: Subinterval) -> Double {
+    private func translateProgress(_ position: Double, overSubinterval subinterval: Subinterval) -> Double {
         if subinterval == kUnitInterval {
-            return progress
+            return position
         }
         
-        return subinterval.progress(forValue: progress)
+        return subinterval.position(forValue: position)
     }
 }
 
 extension ParallaxEffect: ParallaxInheritable {
     
-    fileprivate func inheritProgress(_ progress: Double) {
-        let progress = isInheritedProgressClamped ? min(1, max(0, progress)) : progress
-        let transformed = progressCurve.transform(progress: progress)
+    fileprivate func inheritProgress(_ position: Double) {
+        let position = isInheritedProgressClamped ? min(1, max(0, position)) : position
+        let transformed = progressCurve.transform(position: position)
         setProgress(transformed)
     }
 }

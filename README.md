@@ -35,7 +35,7 @@ nodes in a parallax tree. See source files for more documentation.
     - A bidirectional interval with boundaries such that `from != to`.
 
 - `ParallaxCurve`:
-    - Used by an effect to transform progress inherited from its parent.
+    - Used by an effect to transform position inherited from its parent.
 
 ## Usage
 

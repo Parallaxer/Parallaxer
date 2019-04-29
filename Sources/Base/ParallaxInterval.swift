@@ -20,12 +20,12 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
         self.to = to
     }
     
-    func progress(forValue value: ValueType) -> Double {
-        return ValueType.progress(forValue: value, from: from, to: to)
+    func position(forValue value: ValueType) -> Double {
+        return ValueType.position(forValue: value, from: from, to: to)
     }
     
-    func value(forProgress progress: Double) -> ValueType {
-        return ValueType.value(forProgress: progress, from: from, to: to)
+    func value(atPosition position: Double) -> ValueType {
+        return ValueType.value(atPosition: position, from: from, to: to)
     }
 }
 
