@@ -24,6 +24,21 @@ final class ParallaxCurveTests: XCTestCase {
         XCTAssertEqual(ease.transform(progress: 0.5), 0.5, accuracy: Double(Float.ulpOfOne))
         XCTAssertEqual(ease.transform(progress: 1), 1)
     }
+
+    func testClampToUnitIntervalTransform() {
+        let clamp = ParallaxCurve.clampToUnitInterval
+        XCTAssertEqual(clamp.transform(progress: -1), 0)
+        XCTAssertEqual(clamp.transform(progress: -0.5), 0, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: -0.25), 0, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 0), 0)
+        XCTAssertEqual(clamp.transform(progress: 0.25), 0.25, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 0.5), 0.5, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 0.75), 0.75, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 1), 1)
+        XCTAssertEqual(clamp.transform(progress: 1.25), 1, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 1.5), 1, accuracy: Double(Float.ulpOfOne))
+        XCTAssertEqual(clamp.transform(progress: 2), 1)
+    }
     
     func testSingleOscillationTransform() {
         let singleOscillation = ParallaxCurve.oscillate(numberOfTimes: 1)

@@ -1,21 +1,17 @@
 import RxSwift
-
-/// A type which represents a subinterval, specified over the unit interval [0, 1].
-public typealias Subinterval = ParallaxInterval<Double>
-
-public let kSubinterval: Subinterval = ParallaxInterval<Double>(from: 0, to: 1)
+import RxCocoa
 
 public protocol ParallaxTransformable {
 
     /// The type of value that is changing.
     associatedtype ValueType: Parallaxable
 
+    /// The interval over which change is expected to occur. Values are relative to this interval.
+    var interval: ParallaxInterval<ValueType> { get }
+
     /// Current progress over `interval`, represented as a value along, but not necessarily bounded by, the
     /// unit interval [0, 1].
     var progress: Double { get }
-
-    /// The interval over which change is expected to occur. Values are relative to this interval.
-    var interval: ParallaxInterval<ValueType> { get }
 }
 
 extension ParallaxTransformable {
@@ -26,65 +22,149 @@ extension ParallaxTransformable {
     }
 }
 
-// [0                       4]   interval
-// [0     1     2     3     4]   values
-// [0%   25%   50%   75%   100%] progression
-//        ^
-//      0.25                     progress
-//            [0.5         1.0]  subinterval
-//      -0.5    0    0.5   1.0   subinterval values
-public struct ParallaxProgress<ValueType: Parallaxable>: ParallaxTransformable {
+public struct ParallaxProgression<ValueType: Parallaxable>: ParallaxTransformable {
 
-    public let progress: Double
     public let interval: ParallaxInterval<ValueType>
+    public let progress: Double
 }
 
 extension ObservableType where E: Parallaxable {
 
-    public func asParallaxObservable(over interval: ParallaxInterval<E>) -> Observable<ParallaxProgress<E>> {
+    /// Transform a parallaxable value into a parallax progression, with progress determined by the value
+    /// along the given `interval`; this is the first step toward defining a parallax transformation.
+    ///
+    /// - Parameter interval: An interval over which change is expected to occur.
+    /// - Returns: A parallax progression over the given `interval`.
+    public func toParallaxProgression(over interval: ParallaxInterval<E>)
+        -> Observable<ParallaxProgression<E>>
+    {
         return map { value in
             let progress = interval.progress(forValue: value)
-            return ParallaxProgress(progress: progress, interval: interval)
+            return ParallaxProgression(interval: interval, progress: progress)
         }
     }
 }
 
 extension ObservableType where E: ParallaxTransformable {
 
-    public func normalize(over Subinterval: Subinterval) -> Observable<ParallaxProgress<Double>> {
-        return map { value in
-            if Subinterval == kSubinterval {
-                return ParallaxProgress<Double>(progress: value.progress, interval: kSubinterval)
-            }
-
-            let transformedProgress = Subinterval.progress(forValue: value.progress)
-            return ParallaxProgress<Double>(progress: transformedProgress, interval: Subinterval)
-        }
-    }
-
-    public func transform(with curve: ParallaxCurve) -> Observable<ParallaxProgress<E.ValueType>> {
-        return map { value in
-            let transformedProgress = curve.transform(progress: value.progress)
-            return ParallaxProgress(progress: transformedProgress, interval: value.interval)
-        }
-    }
-
-    public func clampToUnitInterval() -> Observable<ParallaxProgress<E.ValueType>> {
-        return map { value in
-            let clampedProgress = min(1, max(0, value.progress))
-            return ParallaxProgress(progress: clampedProgress, interval: value.interval)
-        }
-    }
-
-    public func transform<OtherValueType>(over interval: ParallaxInterval<OtherValueType>)
-        -> Observable<ParallaxProgress<OtherValueType>>
+    /// Transform values from the prior progression interval to the given `otherInterval`.
+    ///
+    /// Note: This operator shall preserve the progress of a parallax progression. Thus, values at the
+    /// *beginning* of the prior interval shall map to values at the *beginning* of `otherInterval`, values at
+    /// the *center* of the prior interval shall map to values at the *center* of `otherInterval`, etc.
+    ///
+    /// Note: This operator shall transform the interval of a parallax progression.
+    ///
+    /// Note: `otherInterval`'s value type can differ from that of the prior interval.
+    ///
+    /// ```
+    /// Before Map:
+    ///       [0           3]           prior interval: [0, 3]
+    ///  -50%  0%  50%  100%   150%     prior progression
+    ///                    ^            prior progress: 100%
+    ///  0     1     2     3     4      prior values
+    ///
+    /// After Map([0, 4):
+    ///       [0                 4]     new interval: [0, 4]
+    /// -50%   0% 25% 50% 75% 100%      new progression
+    ///                          ^      new progress: 100% (unchanged)
+    ///  0     1     2     3     4      new values
+    /// ```
+    ///
+    /// Example - Map values from the Double-typed interval, `[0, 3]`, to the CGFloat-typed interval `[0, 6]`:
+    ///   ```
+    ///   Observable.from([-1, 0, 1, 2, 3, 4])
+    ///       .parallaxProgression(over: ParallaxInterval<Double>(from: 0, to: 3))
+    ///       .parallaxMap(toInterval: ParallaxInterval<CGFloat>(from: 0, to: 6))
+    ///       .parallaxValue()
+    ///       // signals: -2, 0, 2, 4, 6, 8
+    ///   ```
+    /// - Parameter otherInterval: The interval to which values shall map from the prior interval.
+    /// - Returns: A parallax progression, with values transformed to `otherInterval`.
+    public func parallaxMap<OtherValueType>(toInterval otherInterval: ParallaxInterval<OtherValueType>)
+        -> Observable<ParallaxProgression<OtherValueType>>
     {
         return map { value in
-            return ParallaxProgress<OtherValueType>(progress: value.progress, interval: interval)
+            return ParallaxProgression<OtherValueType>(interval: otherInterval, progress: value.progress)
         }
     }
 
-    public func parallaxValue() -> Observable<E.ValueType> {
+    /// Transform progress from a prior progression using the given `curve`.
+    ///
+    /// Note: This operator shall transform the progress of a parallax progression.
+    ///
+    /// Note: This operator shall preserve the interval of a parallax progression.
+    ///
+    /// ```
+    /// Before Curve:
+    ///       [1           3]           prior interval: [1, 3]
+    /// -50%   0%  50%  100%    150%    prior progress: 150%
+    ///                          ^
+    ///  0     1     2     3     4      prior value: 4
+    ///
+    /// After Curve(.clampToUnitInterval):
+    ///       [1           3]           new interval: [1, 3] (unchanged)
+    /// -50%  [0%  50%  100%]   150%    new progress: 100%
+    ///                    ^
+    ///  0     1     2     3     4      new value: 3
+    /// ```
+    ///
+    /// Example 1 - Clamp values to the interval, `[0, 3]`:
+    ///   ```
+    ///   Observable.from([-2, -1, 0, 1, 2, 3, 4, 5])
+    ///       .parallaxProgression(over: ParallaxInterval(from: 0, to: 3))
+    ///       .parallaxCurve(.clampToUnitInterval)
+    ///       .parallaxValue()
+    ///       // signals: 0, 0, 0, 1, 2, 3, 3, 3
+    ///   ```
+    /// - Parameter curve: The curve with which to transform progress.
+    /// - Returns: A parallax progression, with progress transformed by `curve`.
+    public func parallaxCurve(_ curve: ParallaxCurve) -> Observable<ParallaxProgression<E.ValueType>> {
+        return map { value in
+            let transformedProgress = curve.transform(progress: value.progress)
+            return ParallaxProgression(interval: value.interval, progress: transformedProgress)
+        }
+    }
+
+    /// Transform progress over the given `subinterval`, a subset of the prior progression interval, such that
+    /// a value on the prior interval maps to the same value on `subinterval`.
+    ///
+    /// Note: This operator shall transform both the progress and interval of a parallax progression.
+    ///
+    /// Note: `subinterval` need not necessarily be a strict subset of the prior interval; indeed some
+    /// interesting effects can be created with a superset as well.
+    ///
+    /// ```
+    /// Before Filter:
+    /// [0                       4]     prior interval: [0, 4]
+    /// [0%   25%   50%   75%   100%]   prior progress: 25%
+    ///        ^
+    ///  0     1     2     3     4      prior value: 1
+    ///
+    /// After Filter([2, 4]):
+    ///             [2           4]     `subinterval`: [2, 4]
+    /// -100% -50%   0%   50%   100%    new progress: -50%
+    ///        ^
+    ///  0     1     2     3     4      new value: 1 (unchanged)
+    /// ```
+    ///
+    /// - Parameter subinterval: A subset of the prior progression interval.
+    /// - Returns: A parallax progression with each value from the prior interval mapped to the same value on
+    ///            the given `subinterval`.
+    public func parallaxFocus(subinterval: ParallaxInterval<E.ValueType>)
+        -> Observable<ParallaxProgression<E.ValueType>> {
+            return map { value in
+                let valueOnOldInterval = value.interval.value(forProgress: value.progress)
+                let transformedProgress = subinterval.progress(forValue: valueOnOldInterval)
+                return ParallaxProgression(interval: subinterval, progress: transformedProgress)
+            }
+    }
+
+    /// Convert the parallax progression into a value over the prior interval; this value is intended for the
+    /// user interface.
+    ///
+    /// - Returns: A value over the prior interval, suitable for the user interface.
+    public func toParallaxValue() -> Observable<E.ValueType> {
         return map { value in
             return value.valueOverInterval
         }

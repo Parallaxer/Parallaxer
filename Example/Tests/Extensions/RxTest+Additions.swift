@@ -49,4 +49,20 @@ extension TestScheduler {
         }
         return observer
     }
-}
+
+    /// Start recording the specified observable and assert that its result is equal to the given output.
+    ///
+    /// - Parameters:
+    ///   - output:     The expected output from the given `observable`
+    ///   - observable: The observable to record.
+    ///   -disposeTime: A virtual time at which recording shall stop. The default is 10000.
+    func assert<T: Equatable>(
+        output: [T],
+        from observable: Observable<T>,
+        after disposeTime: TestTime = 10000)
+    {
+        let expectedOutput = TestScheduler.chronologicalEvents(from: output)
+        let results = record(observable, disposeTime: disposeTime)
+        start()
+        XCTAssertEqual(results.events, expectedOutput)
+    }}

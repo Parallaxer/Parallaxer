@@ -20,6 +20,7 @@
 		8466489F226D2D0400214770 /* ParallaxableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466489B226D2D0300214770 /* ParallaxableTests.swift */; };
 		846648A0226D2D0400214770 /* ParallaxerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466489C226D2D0300214770 /* ParallaxerTests.swift */; };
 		846648A1226D2D0400214770 /* ParallaxCurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466489D226D2D0300214770 /* ParallaxCurveTests.swift */; };
+		8470CE5122764D7A002EC18A /* RxParallaxerDocumentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8470CE5022764D7A002EC18A /* RxParallaxerDocumentationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		8466489B226D2D0300214770 /* ParallaxableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxableTests.swift; sourceTree = "<group>"; };
 		8466489C226D2D0300214770 /* ParallaxerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxerTests.swift; sourceTree = "<group>"; };
 		8466489D226D2D0300214770 /* ParallaxCurveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxCurveTests.swift; sourceTree = "<group>"; };
+		8470CE5022764D7A002EC18A /* RxParallaxerDocumentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxParallaxerDocumentationTests.swift; sourceTree = "<group>"; };
 		AA465713D640469C7CCFF889 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA48578579D35836208D009 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C4B6401FC14CFB1BA88750A0 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				8466489D226D2D0300214770 /* ParallaxCurveTests.swift */,
 				8466489C226D2D0300214770 /* ParallaxerTests.swift */,
 				841E2CC0226EB07400FB2D31 /* RxParallaxerTests.swift */,
+				8470CE5022764D7A002EC18A /* RxParallaxerDocumentationTests.swift */,
 				8466489A226D2D0300214770 /* ParallaxIntervalTests.swift */,
 				84664881226D2C8A00214770 /* Info.plist */,
 			);
@@ -366,6 +369,7 @@
 			files = (
 				841E2CCD226EB3E400FB2D31 /* RxTest+Additions.swift in Sources */,
 				8466489F226D2D0400214770 /* ParallaxableTests.swift in Sources */,
+				8470CE5122764D7A002EC18A /* RxParallaxerDocumentationTests.swift in Sources */,
 				8466489E226D2D0400214770 /* ParallaxIntervalTests.swift in Sources */,
 				846648A1226D2D0400214770 /* ParallaxCurveTests.swift in Sources */,
 				841E2CC1226EB07400FB2D31 /* RxParallaxerTests.swift in Sources */,
