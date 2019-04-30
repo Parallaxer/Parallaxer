@@ -1,21 +1,21 @@
 /// Types which conform to `Parallaxable` may represent values in a parallax progression.
 public protocol Parallaxable: Hashable {
     
-    /// Convert the given `value` on the specified interval to a position on the unit interval.
+    /// Convert the given `value` to a unit position on the interval [`from`, `to`].
     ///
     /// - Parameters:
-    ///   - value:  A value over the specified interval, [`from`, `to`].
+    ///   - value:  A value on the specified interval, [`from`, `to`].
     ///   - from:   The start of the interval.
     ///   - to:     The end of the interval.
-    /// - Returns: A position over the unit interval, [0, 1].
-    static func position(forValue value: Self, from: Self, to: Self) -> Double
+    /// - Returns: A position on the unit interval, [0, 1].
+    static func unitPosition(forValue value: Self, from: Self, to: Self) -> Double
     
-    /// Convert the given `position` on the unit interval to a value on the specified interval.
+    /// Convert the given `unitPosition` to a value on the interval [`from`, `to`].
     ///
     /// - Parameters:
-    ///   - position:   A position on the unit interval, [0, 1].
-    ///   - from:       The start of the interval.
-    ///   - to:         The end of the interval.
-    /// - Returns: A value over the specified interval, [`from`, `to`].
-    static func value(atPosition position: Double, from: Self, to: Self) -> Self
+    ///   - unitPosition:   A position on the unit interval, [0, 1].
+    ///   - from:           The start of the interval.
+    ///   - to:             The end of the interval.
+    /// - Returns: A value on the specified interval, [`from`, `to`].
+    static func value(atUnitPosition unitPosition: Double, from: Self, to: Self) -> Self
 }

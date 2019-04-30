@@ -17,7 +17,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 10))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 10))
             .toParallaxValue()
 
         // Record events emitted by parallax.
@@ -40,7 +40,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 4))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
@@ -68,7 +68,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 4))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
             .parallaxCurve(.clampToUnitInterval)
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
@@ -99,8 +99,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 4))
-//            .parallaxFilter(subinterval: ParallaxInterval(from: 0.5, to: 1))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
             .parallaxFocus(subinterval: ParallaxInterval(from: 2, to: 4))
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
@@ -133,7 +132,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 4))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
             .parallaxFocus(subinterval: ParallaxInterval(from: 2, to: 4))
             .parallaxCurve(.clampToUnitInterval)
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
@@ -165,7 +164,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: CGPoint(x: 2, y: 2), to: CGPoint(x: 4, y: 4)))
+            .toParallaxTransform(over: ParallaxInterval(from: CGPoint(x: 2, y: 2), to: CGPoint(x: 4, y: 4)))
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
             .map(round)
@@ -196,7 +195,7 @@ final class RxParallaxerTests: XCTestCase {
         ]
 
         let root = scheduler.createHotObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 4))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
 
         let percentage = root
             .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))

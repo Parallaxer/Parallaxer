@@ -11,7 +11,7 @@ final class RxParallaxerDocumentationTests: XCTestCase {
 
         let scheduler = TestScheduler(initialClock: 0)
         let progression = scheduler.createColdObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval(from: 0, to: 3))
+            .toParallaxTransform(over: ParallaxInterval(from: 0, to: 3))
             .parallaxCurve(.clampToUnitInterval)
             .toParallaxValue()
 
@@ -24,7 +24,7 @@ final class RxParallaxerDocumentationTests: XCTestCase {
 
         let scheduler = TestScheduler(initialClock: 0)
         let progression = scheduler.createColdObservable(withChronologicalValues: input)
-            .toParallaxProgression(over: ParallaxInterval<Double>(from: 0, to: 3))
+            .toParallaxTransform(over: ParallaxInterval<Double>(from: 0, to: 3))
             .parallaxMap(toInterval: ParallaxInterval<CGFloat>(from: 0, to: 6))
             .toParallaxValue()
 

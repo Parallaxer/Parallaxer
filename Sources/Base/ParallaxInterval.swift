@@ -21,11 +21,11 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
     }
     
     func position(forValue value: ValueType) -> Double {
-        return ValueType.position(forValue: value, from: from, to: to)
+        return ValueType.unitPosition(forValue: value, from: from, to: to)
     }
     
     func value(atPosition position: Double) -> ValueType {
-        return ValueType.value(atPosition: position, from: from, to: to)
+        return ValueType.value(atUnitPosition: position, from: from, to: to)
     }
 }
 
