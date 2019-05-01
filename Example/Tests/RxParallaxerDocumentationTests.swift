@@ -25,7 +25,7 @@ final class RxParallaxerDocumentationTests: XCTestCase {
         let scheduler = TestScheduler(initialClock: 0)
         let progression = scheduler.createColdObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval<Double>(from: 0, to: 3))
-            .parallaxMap(toInterval: ParallaxInterval<CGFloat>(from: 0, to: 6))
+            .parallaxScale(to: ParallaxInterval<CGFloat>(from: 0, to: 6))
             .toParallaxValue()
 
         scheduler.assert(output: output, from: progression)

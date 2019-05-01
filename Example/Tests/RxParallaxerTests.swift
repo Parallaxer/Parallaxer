@@ -41,7 +41,7 @@ final class RxParallaxerTests: XCTestCase {
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
         // Record events emitted by parallax.
@@ -70,7 +70,7 @@ final class RxParallaxerTests: XCTestCase {
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
             .parallaxCurve(.clampToUnitInterval)
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
         // Record events emitted by parallax.
@@ -100,8 +100,8 @@ final class RxParallaxerTests: XCTestCase {
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
-            .parallaxFocus(subinterval: ParallaxInterval(from: 2, to: 4))
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxSelect(subinterval: ParallaxInterval(from: 2, to: 4))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
         // Record events emitted by parallax.
@@ -133,9 +133,9 @@ final class RxParallaxerTests: XCTestCase {
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
-            .parallaxFocus(subinterval: ParallaxInterval(from: 2, to: 4))
+            .parallaxSelect(subinterval: ParallaxInterval(from: 2, to: 4))
             .parallaxCurve(.clampToUnitInterval)
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
         // Record events emitted by parallax.
@@ -165,7 +165,7 @@ final class RxParallaxerTests: XCTestCase {
 
         let parallax = scheduler.createHotObservable(withChronologicalValues: input)
             .toParallaxTransform(over: ParallaxInterval(from: CGPoint(x: 2, y: 2), to: CGPoint(x: 4, y: 4)))
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
             .map(round)
 
@@ -198,7 +198,7 @@ final class RxParallaxerTests: XCTestCase {
             .toParallaxTransform(over: ParallaxInterval(from: 0, to: 4))
 
         let percentage = root
-            .parallaxMap(toInterval: ParallaxInterval<Double>(from: 0, to: 100))
+            .parallaxScale(to: ParallaxInterval<Double>(from: 0, to: 100))
             .toParallaxValue()
 
         // Record events emitted by percentage.
