@@ -3,7 +3,7 @@ public protocol Parallaxable: Equatable {
     
     /// Convert the given `value` to a unit position on the interval [`from`, `to`].
     ///
-    /// # ⚠️ This function must implement the following formula:
+    /// # 🔢 Unit-position formula:
     /// ```
     /// (value - from) / (to - from)
     /// ```
@@ -23,7 +23,7 @@ public protocol Parallaxable: Equatable {
     
     /// Convert the given `unitPosition` to a value on the interval [`from`, `to`].
     ///
-    /// # ⚠️ This function must implement the following formula:
+    /// # 🔢 Parallax value formula:
     /// ```
     /// from * (1 - unitPosition) + to * unitPosition
     /// ```

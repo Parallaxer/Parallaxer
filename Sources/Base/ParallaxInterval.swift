@@ -6,7 +6,8 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
 
     /// Initialize a `ParallaxInterval`, which defines a bidirectional interval.
     ///
-    /// - Warning: ⚠️ Single value intervals are not supported and shall result in a `nil` interval.
+    /// - Warning: ⚠️ Single value intervals, where `from` and `to` are equal, are not supported and shall
+    /// result in a `nil` interval.
     ///
     /// - Parameters:
     ///   - from:   The start of the interval.

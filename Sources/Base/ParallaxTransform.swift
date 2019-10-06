@@ -14,14 +14,15 @@ public struct ParallaxTransform<ValueType: Parallaxable> {
     /// An interval denoting the bounds of the transform.
     public let interval: ParallaxInterval<ValueType>
 
-    /// A number between [0, 1] denoting a value on `interval`. 0 refers to the beginning of the interval
-    /// and 1 refers to the end.
+    /// A number on the unit interval, [0, 1], which refers to a value on `interval`. 0 refers to the
+    /// beginning of the interval and 1 refers to the end.
     ///
-    /// Any value less than 0 or greater than 1 refers to a value outside of the bounds of `interval`.
+    /// A unit position may be less than 0 or greater than 1 if it refers to a value outside the bounds of
+    /// `interval`.
     public let unitPosition: Double
 
-    /// Initialize a parallax transform with an interval denoting the bounds of the transform, and a value
-    /// to which the transform's unit position shall refer.
+    /// Initialize a parallax transform with an interval denoting its bounds, and a value to which the its
+    /// unit position shall refer.
     ///
     /// - Parameter interval: The interval on which change is expected to occur.
     /// - Parameter parallaxValue: A value to which the transform's unit position shall refer.
