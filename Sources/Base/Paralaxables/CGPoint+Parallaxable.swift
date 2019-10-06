@@ -2,7 +2,12 @@ import CoreGraphics
 
 extension CGPoint: Parallaxable {
     
-    public static func unitPosition(forValue value: CGPoint, from: CGPoint, to: CGPoint) -> Double {
+    public static func unitPosition(
+        forValue value: CGPoint,
+        from: CGPoint,
+        to: CGPoint)
+        -> Double
+    {
         let a = CGPoint(x: value.x - from.x, y: value.y - from.y)
         let b = CGPoint(x: to.x - from.x, y: to.y - from.y)
         let bmag = CGFloat(sqrt(Double(b.x * b.x + b.y * b.y)))
@@ -11,17 +16,14 @@ extension CGPoint: Parallaxable {
         return Double(scalarProjection / bmag)
     }
     
-    public static func value(atUnitPosition position: Double, from: CGPoint, to: CGPoint) -> CGPoint {
-        let position = CGFloat(position)
+    public static func value(
+        atUnitPosition unitPosition: Double,
+        from: CGPoint,
+        to: CGPoint)
+        -> CGPoint
+    {
+        let unitPosition = CGFloat(unitPosition)
         let b = CGPoint(x: to.x - from.x, y: to.y - from.y)
-        return CGPoint(x: from.x + b.x * position, y: from.y + b.y * position)
-    }
-}
-
-extension CGPoint: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
+        return CGPoint(x: from.x + b.x * unitPosition, y: from.y + b.y * unitPosition)
     }
 }

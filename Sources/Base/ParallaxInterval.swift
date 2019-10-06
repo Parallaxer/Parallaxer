@@ -1,4 +1,4 @@
-/// A `ParallaxInterval` specifies a bidirectional interval with boundaries such that `from != to`.
+/// A bidirectional interval which specifies a boundary such that `from` != `to`.
 public struct ParallaxInterval<ValueType: Parallaxable> {
     
     private let from: ValueType
@@ -6,40 +6,35 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
 
     /// Initialize a `ParallaxInterval`, which defines a bidirectional interval.
     ///
-    /// - note: `from` and `to` mustn't equal.
+    /// - Warning: ⚠️ Single value intervals are not supported and shall result in a `nil` interval.
     ///
     /// - Parameters:
     ///   - from:   The start of the interval.
     ///   - to:     The end of the interval.
-    public init(from: ValueType, to: ValueType) {
+    /// - Returns: A parallax interval, which may be used with parallax transformations. `nil` if `from` and
+    /// `to` are the same.
+    public init?(from: ValueType,
+                 to: ValueType)
+    {
         guard from != to else {
-            fatalError("A ParallaxInterval's boundaries mustn't equal.")
+            return nil
         }
         
         self.from = from
         self.to = to
     }
     
-    func position(forValue value: ValueType) -> Double {
+    func position(
+        forValue value: ValueType)
+        -> Double
+    {
         return ValueType.unitPosition(forValue: value, from: from, to: to)
     }
     
-    func value(atPosition position: Double) -> ValueType {
+    func value(
+        atPosition position: Double)
+        -> ValueType
+    {
         return ValueType.value(atUnitPosition: position, from: from, to: to)
-    }
-}
-
-extension ParallaxInterval: Equatable {
-    
-    public static func ==(lhs: ParallaxInterval<ValueType>, rhs: ParallaxInterval<ValueType>) -> Bool {
-        return lhs.from == rhs.from && lhs.to == rhs.to
-    }
-}
-
-extension ParallaxInterval: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(from)
-        hasher.combine(to)
     }
 }

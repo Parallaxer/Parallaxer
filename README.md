@@ -1,6 +1,6 @@
 # Parallaxer
 
-Parallaxer is a framework for crafting parallax effects in Swift.
+Craft interactive parallax effects in Swift.
 
 ## Requirements
 - Swift 4.2
@@ -34,7 +34,7 @@ nodes in a parallax tree. See source files for more documentation.
 - `ParallaxInterval`:
     - A bidirectional interval with boundaries such that `from != to`.
 
-- `ParallaxCurve`:
+- `PositionCurve`:
     - Used by an effect to transform position inherited from its parent.
 
 ## Usage
