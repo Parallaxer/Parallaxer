@@ -39,3 +39,10 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
         return ValueType.value(atUnitPosition: position, from: from, to: to)
     }
 }
+
+extension ParallaxInterval: CustomStringConvertible {
+
+    public var description: String {
+        return "ParallaxInterval<\(String(describing: self))>(from: \(from), to: \(to))"
+    }
+}

@@ -168,3 +168,14 @@ extension ParallaxTransform {
         return ParallaxTransform(interval: subinterval, unitPosition: transformedPosition)
     }
 }
+
+extension ParallaxTransform: CustomStringConvertible {
+
+    public var description: String {
+        return "ParallaxTransform<\(String(describing: self))>("
+            + "interval: \(interval)"
+            + ", unitPosition: \(unitPosition)"
+            + ", parallaxValue: \(parallaxValue())"
+            + ")"
+    }
+}
