@@ -1,7 +1,7 @@
 import RxSwift
 import RxCocoa
 
-extension ObservableType where E: Parallaxable {
+extension ObservableType where Element: Parallaxable {
 
     /// Create a new parallax transform on the given `interval`, with the observable element as its
     /// `parallaxValue`.
@@ -19,8 +19,8 @@ extension ObservableType where E: Parallaxable {
     /// - Parameter interval: An interval over which change is expected to occur.
     /// - Returns: A parallax transform composed by calling `transform()`.
     public func parallax(
-        over interval: Observable<ParallaxInterval<E>>)
-        -> Observable<ParallaxTransform<E>>
+        over interval: Observable<ParallaxInterval<Element>>)
+        -> Observable<ParallaxTransform<Element>>
     {
         return Observable
             .combineLatest(interval, self)

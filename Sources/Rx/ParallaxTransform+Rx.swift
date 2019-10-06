@@ -12,7 +12,7 @@ extension ObservableType {
     /// ```
     /// - Returns: A value on the receiver's transform interval, suitable for the user interface.
     public func parallaxValue<ValueType>() -> Observable<ValueType>
-        where E == ParallaxTransform<ValueType>
+        where Element == ParallaxTransform<ValueType>
     {
         return map { transform in
             return transform.parallaxValue()
@@ -49,7 +49,7 @@ extension ObservableType {
     public func parallaxScale<ValueType, ResultValueType>(
         to otherInterval: Observable<ParallaxInterval<ResultValueType>>)
         -> Observable<ParallaxTransform<ResultValueType>>
-        where E == ParallaxTransform<ValueType>
+        where Element == ParallaxTransform<ValueType>
     {
         return Observable
             .combineLatest(self, otherInterval)
@@ -89,7 +89,7 @@ extension ObservableType {
     public func parallaxReposition<ValueType>(
         with curve: Observable<PositionCurve>)
         -> Observable<ParallaxTransform<ValueType>>
-        where E == ParallaxTransform<ValueType>
+        where Element == ParallaxTransform<ValueType>
     {
         return Observable
             .combineLatest(self, curve)
@@ -129,7 +129,7 @@ extension ObservableType {
     public func parallaxFocus<ValueType>(
         subinterval: Observable<ParallaxInterval<ValueType>>)
         -> Observable<ParallaxTransform<ValueType>>
-        where E == ParallaxTransform<ValueType>
+        where Element == ParallaxTransform<ValueType>
     {
         return Observable
             .combineLatest(self, subinterval)

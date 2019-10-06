@@ -59,7 +59,7 @@ extension ObservableType {
         from: Observable<ValueType>,
         to: Observable<ValueType>)
         -> Observable<ParallaxInterval<ValueType>>
-        where E == ParallaxInterval<ValueType>
+        where Element == ParallaxInterval<ValueType>
     {
         return ParallaxInterval.rx.interval(from: from, to: to)
     }
@@ -82,7 +82,7 @@ extension ObservableType {
         from: ValueType,
         to: ValueType)
         -> Observable<ParallaxInterval<ValueType>>
-        where E == ParallaxInterval<ValueType>
+        where Element == ParallaxInterval<ValueType>
     {
         return ParallaxInterval.rx.interval(from: from, to: to)
     }
