@@ -23,7 +23,7 @@ pod 'Parallaxer'
 ## Overview
 
 The purpose of **Parallaxer** is to provide a simple, declarative interface for establishing relationships
-between changing values in your application; use it to build delightful animations.
+between changing values in your application; use it to build delightful animations or tight controller interactions.
 
 ### Examples of parallax
 
@@ -61,7 +61,7 @@ A position curve affects how a unit position progresses over the unit interval: 
 
 ## Usage
 
-While crafting a parallax effect, it helps to *think in terms of intervals*:
+When envisioning a parallax effect, it helps to *think in terms of intervals*:
   - First identify what is changing.
   - Then determine the interval which best represents the boundary of that change. 
 
@@ -123,7 +123,8 @@ let indicatorPositionTransform = scrollingTransform
 ```
 
 #### Tie it all together:
-Using **Parallaxer**'s RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method.
+Using **Parallaxer**'s RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method. 
+
 ```Swift
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -136,8 +137,8 @@ override func viewDidLoad() {
     let scrollingInterval = ParallaxInterval(from: 0, to: maxScrollDistanceY)
 
     // Create a transform representing the content offset of the scroll view.
-    let scrollingTransform = scrollView.rx.contentOffset
-        .map { return $0.y }
+    let scrollingTransform = scrollView.rx.contentOffset // RxCocoa.
+        .map { return $0.y } // RxSwift.
         .parallax(over: scrollingInterval)
 
     // Determine the indicator's position interval, over which the indicator can move.
@@ -150,14 +151,15 @@ override func viewDidLoad() {
     // Finally, bind the indicator parallax value to the image view's center point.
     indicatorPositionTransform
         .parallaxValue()
-        .subscribe(onNext: { [unowned self] positionY in
+        .subscribe(onNext: { [unowned self] positionY in // RxSwift.
             self.indicatorImageView.center = CGPoint(
                 x: self.scrollIndicator.center.x
                 y: positionY)
         }
-        .disposed(by: disposeBag)
+        .disposed(by: disposeBag) // RxSwift.
 }
 ```
+Note: I've commented the lines which use standard `RxSwift`/`RxCocoa` functions. Please see the [RxSwift documentation](https://github.com/ReactiveX/RxSwift) if you have a question about those.
 
 ### [PhotoBook](https://github.com/Parallaxer/PhotoBook) example project
 
