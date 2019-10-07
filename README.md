@@ -30,6 +30,7 @@ between changing values in your application; use it to build delightful animatio
 - Slow moving backdrops in a side scrolling video game.
 - Hour, minute and second hands on an analog watch. 
 - A download progress indicator.
+- Analog joystick controller input.
 
 ### `ParallaxTransform`: 
 
