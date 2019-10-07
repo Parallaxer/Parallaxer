@@ -96,7 +96,8 @@ We can calculate `scrollingInterval` like so:
 
 #### Finally, relate these intervals to each other:
 
-Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed that `ParallaxTransform` can help with that, then please enjoy this freshly baked 🍪.)
+Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed 
+that `ParallaxTransform` can help with that, then please enjoy this freshly baked cookie: 🍪.)
 ```Swift
 // Create a transform representing the content offset of the scroll view.
 let scrollingTransform = ParallaxTransform(
@@ -109,7 +110,8 @@ let indicatorPositionTransform = scrollingTransform
 ```
 
 #### Tie it all together:
-Using Parallaxer's RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method. 
+Using Parallaxer's RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` 
+method. 
 
 ```Swift
 override func viewDidLoad() {
@@ -145,7 +147,8 @@ override func viewDidLoad() {
         .disposed(by: disposeBag) // RxSwift.
 }
 ```
-Note: I've commented the lines which use standard `RxSwift`/`RxCocoa` functions. Please see the [RxSwift documentation](https://github.com/ReactiveX/RxSwift) if you have a question about those.
+Note: I've commented the lines which use standard `RxSwift`/`RxCocoa` functions. Please see the 
+[RxSwift documentation](https://github.com/ReactiveX/RxSwift) if you have a question about those.
 
 ### [PhotoBook](https://github.com/Parallaxer/PhotoBook) example project
 
