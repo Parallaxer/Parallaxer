@@ -66,7 +66,7 @@ When envisioning a parallax effect, it helps to *think in terms of intervals*:
   - First identify what is changing.
   - Then determine the interval which best represents the boundary of that change. 
 
-### Ex - Custom scroll indicator
+### Example - Custom scroll indicator
 
 Let's add a custom scroll indicator to a vertical-scrolling `UIScrollView`. The scroll indicator 
 shall be rendered with a `UIImageView`, and it shall move up and down in relation to the scroll view's
