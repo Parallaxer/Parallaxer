@@ -40,7 +40,7 @@ interval.
 
 Transformations may be performed which alter the receiving transform's interval and/or its unit 
 position. Each parallax transformation results in a new transform which preserves certain properties
-from its original.
+from the original.
 
 #### Supported transformations:
 
