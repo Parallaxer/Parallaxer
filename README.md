@@ -22,16 +22,14 @@ pod 'Parallaxer'
 
 ## Overview
 
-*Parallax*, at least in the context of this framework, refers to change in a value that happens is relation to some other value.
-
-The purpose of **Parallaxer** is to provide a clean, declarative interface, simplifying the creation of these kinds of relationships.
+The purpose of **Parallaxer** is to provide a simple, declarative interface for establishing relationships
+between changing values in your application; use it to build delightful animations.
 
 ### Examples of parallax
 
 - Slow moving backdrops in a side scrolling video game.
 - Hour, minute and second hands on an analog watch. 
 - A download progress indicator.
-- Something which hasn't been invented yet. Maybe you'll discover a use for Parallaxer.
 
 ### `ParallaxTransform`: 
 
@@ -63,8 +61,9 @@ A position curve affects how a unit position progresses over the unit interval: 
 
 ## Usage
 
-While crafting a parallax effect, it helps to first identify what is changing, and then determine
-interval(s) which best represent the boundaries of those changes.
+While crafting a parallax effect, it helps to *think in terms of intervals*:
+  - First identify what is changing.
+  - Then determine the interval which best represents the boundary of that change. 
 
 ### Ex1 (simple) - Convert values to a percentage of the interval [0, 4].
 
@@ -89,14 +88,14 @@ content offset.
 
 How might we accomplish this with **Parallaxer**?
 
-First, let's identify what is changing:
+#### First, identify what is changing:
 
 1) `UIScrollView.contentOffset` - Whenever the user slides their finger up or down on the scroll view, 
 the view's content offset changes accordingly.
 2) `UIImageView.center` - As the scroll view's content offset changes, so too shall the vertical position 
 of the scroll indicator.
 
-Next, let's determine parallax intervals for the changes we just identified:
+#### Next, determine parallax intervals for the changes we identified:
 
 1) The maximum scrollable distance allowed by a scroll view is a function of its content size and the size of its
 frame. And so we can calculate `scrollingInterval` like so:
@@ -109,9 +108,9 @@ frame. And so we can calculate `scrollingInterval` like so:
     let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
     ```
 
-Finally, we need to relate these intervals somehow, such that whenever scrolling occurs, the content offset
-is transformed into a scroll-indicator position. If you guessed that `ParallaxTransform` can help with that,
-then you are correct!
+#### Finally, relate these intervals to each other:
+
+Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed that `ParallaxTransform` can help with that, then please enjoy this 🍪!)
 ```Swift
 // Create a transform representing the content offset of the scroll view.
 let scrollingTransform = ParallaxTransform(
@@ -123,12 +122,14 @@ let indicatorPositionTransform = scrollingTransform
     .scale(to: indicatorPositionInterval)
 ```
 
-Using RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method.
+#### Tie it all together:
+Using **Parallaxer**'s RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method.
 ```Swift
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    ... // Set up views, layout, etc.
+    // Set up views, layout, etc.
+    ...
 
     // Calculate the scrolling interval, over which scrolling can occur.
     let maxScrollDistanceY = scrollView.contentSize.height - scrollView.frame.height
@@ -146,7 +147,7 @@ override func viewDidLoad() {
     let indicatorPositionTransform = scrollingTransform
         .parallaxScale(to: indicatorPositionInterval)
 
-    // Finally, bind the indicator position to the indicator's center point.
+    // Finally, bind the indicator parallax value to the image view's center point.
     indicatorPositionTransform
         .parallaxValue()
         .subscribe(onNext: { [unowned self] positionY in
