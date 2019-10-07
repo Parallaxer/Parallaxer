@@ -66,22 +66,7 @@ When envisioning a parallax effect, it helps to *think in terms of intervals*:
   - First identify what is changing.
   - Then determine the interval which best represents the boundary of that change. 
 
-### Ex1 (simple) - Convert values to a percentage of the interval [0, 4].
-
-Let's start with a simple example that takes a value on some interval and determines its percentage of 
-that interval.
-```swift
-let root = Observable.from([0, 1, 2, 3, 4])
-    .parallax(over: .interval(from: 0, to: 4))
-
-let percentage = root
-    .parallaxScale(to: .interval(from: 0, to: 100))
-    .parallaxValue()
-    
-// Signals: 0, 25, 50, 75, 100
-```
-
-### Ex2 (intermediate) - Custom scroll indicator
+### Ex - Custom scroll indicator
 
 Let's add a custom scroll indicator to a vertical-scrolling `UIScrollView`. The scroll indicator 
 shall be rendered with a `UIImageView`, and it shall move up and down in relation to the scroll view's
