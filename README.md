@@ -83,20 +83,20 @@ of the scroll indicator.
 
 #### Next, determine parallax intervals for the changes we identified:
 
-1) The maximum scrollable distance allowed by a scroll view is a function of its content size and the size of its
-frame. And so we can calculate `scrollingInterval` like so:
+1) The maximum scrollable distance allowed by a scroll view is a function of its content size and frame size. 
+We can calculate `scrollingInterval` like so:
     ```Swift
     let maxScrollDistanceY = scrollView.contentSize.height - scrollView.frame.height
     let scrollingInterval = ParallaxInterval(from: 0, to: maxScrollDistanceY)
     ```
-2) The scroll indicator shall travel up and down the full height of the scroll view's frame, very straight-forward:
+2) The scroll indicator shall travel up and down the full height of the scroll view's frame; this is very straight-forward:
     ```Swift
     let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
     ```
 
 #### Finally, relate these intervals to each other:
 
-Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed that `ParallaxTransform` can help with that, then please enjoy this 🍪!)
+Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed that `ParallaxTransform` can help with that, then please enjoy this freshly baked 🍪.)
 ```Swift
 // Create a transform representing the content offset of the scroll view.
 let scrollingTransform = ParallaxTransform(
