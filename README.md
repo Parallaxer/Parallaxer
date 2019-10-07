@@ -22,7 +22,7 @@ pod 'Parallaxer'
 
 ## Overview
 
-The purpose of **Parallaxer** is to provide a simple, declarative interface for establishing relationships
+The purpose of Parallaxer is to provide a simple, declarative interface for establishing relationships
 between changing values in your application; use it to build delightful animations or tight controller interactions.
 
 ### Examples of parallax
@@ -86,7 +86,7 @@ Let's add a custom scroll indicator to a vertical-scrolling `UIScrollView`. The 
 shall be rendered with a `UIImageView`, and it shall move up and down in relation to the scroll view's
 content offset.
 
-How might we accomplish this with **Parallaxer**?
+How might we accomplish this with Parallaxer?
 
 #### First, identify what is changing:
 
@@ -123,7 +123,7 @@ let indicatorPositionTransform = scrollingTransform
 ```
 
 #### Tie it all together:
-Using **Parallaxer**'s RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method. 
+Using Parallaxer's RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method. 
 
 ```Swift
 override func viewDidLoad() {
