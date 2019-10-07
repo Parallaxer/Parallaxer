@@ -22,9 +22,9 @@ pod 'Parallaxer'
 
 ## Overview
 
-*Parallax*, at least in the context of this framework, refers to change in one thing in relation to something else.
-The purpose of **Parallaxer** is to simplify the creation of these kinds of relationships using a clean, declarative
-interface.
+*Parallax*, at least in the context of this framework, refers to change in a value that happens is relation to some other value.
+
+The purpose of **Parallaxer** is to provide a clean, declarative interface, simplifying the creation of these kinds of relationships.
 
 ### Examples of parallax
 
