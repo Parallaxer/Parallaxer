@@ -1,6 +1,6 @@
 # Parallaxer
 
-Craft interactive parallax effects in Swift.
+Craft parallax effects in Swift.
 
 ## Requirements
 - Swift 5
@@ -22,8 +22,16 @@ pod 'Parallaxer'
 
 ## Overview
 
-In the context of this framework, *parallax* is a relationship between two reference points, 
-specified as a `ParallaxTransform`.
+*Parallax*, at least in the context of this framework, refers to change in one thing in relation to something else.
+The purpose of **Parallaxer** is to simplify the creation of these kinds of relationships using a clean, declarative
+interface.
+
+### Examples of parallax
+
+- Slow moving backdrops in a side scrolling video game.
+- Hour, minute and second hands on an analog watch. 
+- A download progress indicator.
+- Something which hasn't been invented yet. Maybe you'll discover a use for Parallaxer.
 
 ### `ParallaxTransform`: 
 
@@ -32,15 +40,17 @@ as well as a *unit position*, a number between [0, 1], which serves as a referen
 interval.
 
 Transformations may be performed which alter the receiving transform's interval and/or its unit 
-position. Each parallax transformation results in a new transform.
+position. Each parallax transformation results in a new transform which preserves certain properties
+from its original.
 
-- Supported transformations:
-    - `scale(to: ParallaxInterval)`
-    Alter the interval of the receiving transform, preserving its unit position.
-    - `reposition(with: PositionCurve)`
-    Alter the unit position of the receiving transform, preserving its interval.
-    - `focus(subinterval: ParallaxInterval)`
-    Alter both the interval and unit position of the receiving transform, but preserve its parallax value.
+#### Supported transformations:
+
+- `scale(to: ParallaxInterval)`
+    - Alter the interval of the receiving transform, preserving its unit position.
+- `reposition(with: PositionCurve)`
+    - Alter the unit position of the receiving transform, preserving its interval.
+- `focus(subinterval: ParallaxInterval)`
+    - Alter both the interval and unit position of the receiving transform, preserving its parallax value.
     
 ### `ParallaxInterval`:
 
@@ -49,7 +59,7 @@ the interval over which change is expected to occur.
 
 ### `PositionCurve`:
 
-A position curve affects how a unit position changes.
+A position curve affects how a unit position progresses over the unit interval: [0, 1].
 
 ## Usage
 
@@ -73,67 +83,69 @@ let percentage = root
 
 ### Ex2 (intermediate) - Custom scroll indicator
 
-Let's say we want to add a custom scroll indicator to a vertical-scrolling `UIScrollView`. The scroll indicator 
+Let's add a custom scroll indicator to a vertical-scrolling `UIScrollView`. The scroll indicator 
 shall be rendered with a `UIImageView`, and it shall move up and down in relation to the scroll view's
 content offset.
 
 How might we accomplish this with **Parallaxer**?
 
-First, let's answer the question, "What is changing?":
-    1) `UIScrollView.contentOffset` - Whenever the user slides their finger up or down on the scroll view, 
-    the view's content offset changes accordingly.
-    2) `UIImageView.center` - As the scroll view's content offset changes, so too shall the vertical position 
-    of the scroll indicator.
+First, let's identify what is changing:
 
-Now that we've identified what is changing, let's determine the parallax intervals which bound those changes.
-    1) The maximum scrollable distance allowed by a scroll view is a function of its content size and the size of its
-    frame. And so we can calculate `scrollingInterval` like so:
-    ```
+1) `UIScrollView.contentOffset` - Whenever the user slides their finger up or down on the scroll view, 
+the view's content offset changes accordingly.
+2) `UIImageView.center` - As the scroll view's content offset changes, so too shall the vertical position 
+of the scroll indicator.
+
+Next, let's determine parallax intervals for the changes we just identified:
+
+1) The maximum scrollable distance allowed by a scroll view is a function of its content size and the size of its
+frame. And so we can calculate `scrollingInterval` like so:
+    ```Swift
     let maxScrollDistanceY = scrollView.contentSize.height - scrollView.frame.height
     let scrollingInterval = ParallaxInterval(from: 0, to: maxScrollDistanceY)
     ```
-    2) The scroll indicator shall travel up and down the full height of the scroll view's frame, very straight-forward:
-    ```
+2) The scroll indicator shall travel up and down the full height of the scroll view's frame, very straight-forward:
+    ```Swift
     let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
     ```
 
 Finally, we need to relate these intervals somehow, such that whenever scrolling occurs, the content offset
 is transformed into a scroll-indicator position. If you guessed that `ParallaxTransform` can help with that,
-then you are!
-```swift
+then you are correct!
+```Swift
 // Create a transform representing the content offset of the scroll view.
 let scrollingTransform = ParallaxTransform(
     interval: scrollingInterval,
     parallaxValue: scrollView.contentOffset.y)
-    
+
 // Relate the indicator's position to the scrolling transform.
 let indicatorPositionTransform = scrollingTransform
     .scale(to: indicatorPositionInterval)
 ```
 
 Using RxSwift extensions, we can set all of this up declaratively in our view controller's `viewDidLoad()` method.
-```swift
+```Swift
 override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     ... // Set up views, layout, etc.
-    
+
     // Calculate the scrolling interval, over which scrolling can occur.
     let maxScrollDistanceY = scrollView.contentSize.height - scrollView.frame.height
     let scrollingInterval = ParallaxInterval(from: 0, to: maxScrollDistanceY)
-    
+
     // Create a transform representing the content offset of the scroll view.
     let scrollingTransform = scrollView.rx.contentOffset
         .map { return $0.y }
         .parallax(over: scrollingInterval)
-    
+
     // Determine the indicator's position interval, over which the indicator can move.
     let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
-    
+
     // Relate the indicator's position to the scrolling transform.
     let indicatorPositionTransform = scrollingTransform
         .parallaxScale(to: indicatorPositionInterval)
-        
+
     // Finally, bind the indicator position to the indicator's center point.
     indicatorPositionTransform
         .parallaxValue()
