@@ -1,5 +1,5 @@
 /// A bidirectional interval which specifies a boundary such that `from` != `to`.
-public struct ParallaxInterval<ValueType: Parallaxable> {
+public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
     
     private let from: ValueType
     private let to: ValueType
@@ -43,6 +43,6 @@ public struct ParallaxInterval<ValueType: Parallaxable> {
 extension ParallaxInterval: CustomStringConvertible {
 
     public var description: String {
-        return "ParallaxInterval<\(String(describing: self))>(from: \(from), to: \(to))"
+        return "ParallaxInterval<\(String(describing: ValueType.self))>(from: \(from), to: \(to))"
     }
 }

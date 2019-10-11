@@ -9,7 +9,7 @@
 /// A parallax transform can be converted back into a value suitable for the user interface with the
 /// following operator:
 ///   - `parallaxValue()`
-public struct ParallaxTransform<ValueType: Parallaxable> {
+public struct ParallaxTransform<ValueType: Parallaxable>: Equatable {
 
     /// An interval denoting the bounds of the transform.
     public let interval: ParallaxInterval<ValueType>
@@ -172,7 +172,7 @@ extension ParallaxTransform {
 extension ParallaxTransform: CustomStringConvertible {
 
     public var description: String {
-        return "ParallaxTransform<\(String(describing: self))>("
+        return "ParallaxTransform<\(String(describing: ValueType.self))>("
             + "interval: \(interval)"
             + ", unitPosition: \(unitPosition)"
             + ", parallaxValue: \(parallaxValue())"
