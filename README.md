@@ -38,17 +38,16 @@ A parallax transform consists of a *parallax interval*, over which change is exp
 as well as a *unit position*, a number between [0, 1], which serves as a reference point on that 
 interval.
 
-During your daily commute to work, you leave your home, hop on some form of transportation 
-and eventually arrive at your destination. Along the way, you'll pass by various landmarks that you've
-seen dozens of times before, which give you a sense of how close you are to your destination.
+During your daily commute, you leave your home, hop on some form of transportation and eventually 
+arrive at work. Along the way, you'll pass by various landmarks that you've seen dozens of times before, 
+which give you a sense of where you are in relation to your home and your destination.
 
-If you were to model your commute as a parallax transform, then its interval might be [0 miles, 20 miles]. The transform's unit position would indicate how far you've gone at a particular point along the interval. 
+If you were to model your commute as a parallax transform, then its interval might be [0 miles, 20 miles]. The transform's unit position would then indicate where you are in relation to your journey.
 
-When just leaving your home, your transform's unit position is 0, and when you reach your destination, the unit position is 1. Each landmark along your commute would be represented by a different unit position somewhere between 0 and 1.
+As you walk out of your home, the transform's unit position is 0, and when you walk into your office, the unit position is 1. Each landmark along your commute is represented by a different unit position somewhere between 0 and 1.
 
-Transformations may be performed which alter the receiving transform's interval and/or its unit 
-position. Each parallax transformation results in a new transform which preserves certain properties
-from the original.
+Parallax transformations may be performed which alter the receiving transform's interval and/or its unit 
+position. Each transformation results in a new transform which preserves certain properties from the original.
 
 #### Supported transformations:
 
