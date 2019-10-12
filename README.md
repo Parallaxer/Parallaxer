@@ -42,8 +42,8 @@ During your daily commute to work, you leave your home, hop on some form of tran
 and eventually arrive at your destination. Along the way, you'll pass by various landmarks that you've
 seen dozens of times before, which give you a sense of how close you are to your destination.
 
-If you were to model your commute as a parallax transform, then its interval might be between 0
-and 20 miles, or however far your commute is. The transform's unit position would indicate how
+If you were to model your commute as a parallax transform, then its interval might be from 0 miles
+to 20 miles, or however far your commute is. The transform's unit position would indicate how
 far you've gone at a particular point along the interval. Each landmark along your commute would 
 be represented by a different unit position along the interval.
 
