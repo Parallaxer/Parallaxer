@@ -23,9 +23,9 @@ pod 'Parallaxer'
 ## Overview
 
 Parallaxer is a declarative framework for establishing relationships between changing values 
-in your application; use it to build delightful animations or tight controller interactions.
+in your application; use it to build delightful animations and tight controller interactions.
 
-### Examples of parallax
+### Examples uses of Parallaxer
 
 - Slow moving backdrops in a side scrolling video game.
 - Hour, minute and second hands on an analog watch. 
@@ -42,9 +42,9 @@ During your daily commute, you leave your home, hop on some form of transportati
 arrive at work. Along the way, you'll pass by various landmarks that you've seen dozens of times before, 
 which give you a sense of where you are in relation to your home and your destination.
 
-If you were to model your commute as a parallax transform, then its interval might be [0 miles, 20 miles]. The transform's unit position would then indicate where you are in relation to your journey.
+If you modeled your commute as a parallax transform, then its interval might be [0 miles, 20 miles]. The transform's unit position would then indicate where you are in relation to your journey.
 
-As you walk out of your home, the transform's unit position is 0, and when you walk into your office, the unit position is 1. Each landmark along your commute is represented by a different unit position somewhere between 0 and 1.
+As you walk out of your home, the transform's unit position is 0, and when you walk into your office, the unit position is 1. Each landmark along your commute is represented by a different unit position between 0 and 1.
 
 Parallax transformations may be performed which alter the receiving transform's interval and/or its unit 
 position. Each transformation results in a new transform which preserves certain properties from the original.
