@@ -22,29 +22,28 @@ pod 'Parallaxer'
 
 ## Overview
 
-Parallaxer is a declarative framework for establishing relationships between changing values 
-in your application; use it to build delightful animations and tight controller interactions.
+Parallaxer makes it simple to establish relationships between changing values in your application; 
+use it to build delightful animations and tight controller interactions.
 
-### Examples uses of Parallaxer
+### Example use-cases
 
 - Slow moving backdrops in a side scrolling video game.
 - Hour, minute and second hands on an analog watch. 
 - A download progress indicator.
-- Analog joystick controller input.
+- Analog joystick controller interactions.
 
 ### `ParallaxTransform`: 
 
-A parallax transform consists of a *parallax interval*, over which change is expected to occur,
-as well as a *unit position*, a number between [0, 1], which serves as a reference point on that 
-interval.
+A parallax transform consists of two things: an *interval*, over which change is expected to occur,
+and a *unit position*, a number between [0, 1], which serves as a reference point on that interval.
 
 During your daily commute, you leave your home, hop on some form of transportation and eventually 
 arrive at work. Along the way, you'll pass by various landmarks that you've seen dozens of times before, 
-which give you a sense of where you are in relation to your home and your destination.
+which give you a sense of where you are in relation to your home and your office.
 
-If you modeled your commute as a parallax transform, then its interval might be [0 miles, 20 miles]. The transform's unit position would then indicate where you are in relation to your journey.
+If you modeled your commute as a parallax transform, then its interval might be [0 miles, 12 miles]. The transform's unit position would then indicate where you are in relation to your journey.
 
-As you walk out of your home, the transform's unit position is 0, and when you walk into your office, the unit position is 1. Each landmark along your commute is represented by a different unit position between 0 and 1.
+As you leave your home, the transform's unit position is 0, and when you enter your office, the unit position is 1. Each landmark along your commute is represented by a different unit position between 0 and 1.
 
 Parallax transformations may be performed which alter the receiving transform's interval and/or its unit 
 position. Each transformation results in a new transform which preserves certain properties from the original.
