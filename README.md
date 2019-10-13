@@ -39,14 +39,14 @@ and a *unit position*, a number between [0, 1], which serves as a reference poin
 
 During your daily commute, you leave your home, hop on some form of transportation and eventually 
 arrive at work. Along the way, you'll pass by various landmarks that you've seen dozens of times before, 
-which give you a sense of where you are in relation to your home and your office.
+which give you a sense of where you are in relation to your home and the office.
 
-If you modeled your commute as a parallax transform, then its interval might be [0 miles, 12 miles]. The transform's unit position would then indicate where you are in relation to your journey.
+If you modeled your commute as a parallax transform, its interval might be [0 miles, 12 miles] and its unit position would then indicate where you are in relation to your journey.
 
-As you leave your home, the transform's unit position is 0, and when you enter your office, the unit position is 1. Each landmark along your commute is represented by a different unit position between 0 and 1.
+As you leave your home, the transform's unit position is 0, and when you reach the office, the unit position is 1. Each landmark along your commute is represented by a different unit position between 0 and 1.
 
 Parallax transformations may be performed which alter the receiving transform's interval and/or its unit 
-position. Each transformation results in a new transform which preserves certain properties from the original.
+position. Each transformation results in a new transform which preserves some property of the original.
 
 #### Supported transformations:
 
