@@ -32,7 +32,14 @@ use it to build delightful animations and tight controller interactions.
 - A download progress indicator.
 - Analog joystick controller interactions.
 
-### `ParallaxTransform`: 
+### Parallax Transform: 
+
+```Swift
+struct ParallaxTransform {
+    let interval: ParallaxInterval
+    let unitPosition: Double
+}
+```
 
 A parallax transform consists of two things: an *interval*, over which change is expected to occur,
 and a *unit position*, a number between [0, 1], which serves as a reference point on that interval.
@@ -58,6 +65,13 @@ position. Each transformation results in a new transform which preserves some pr
     - Alter both the interval and unit position of the receiving transform, preserving its parallax value.
     
 ### `ParallaxInterval`:
+
+```Swift
+struct ParallaxInterval {
+    private let from: ValueType
+    private let to: ValueType
+}
+```
 
 A parallax interval is a bidirectional interval with boundaries such that `from != to`; it specifies 
 the interval over which change is expected to occur.
