@@ -1,8 +1,11 @@
 /// A bidirectional interval which specifies a boundary such that `from` != `to`.
 public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
-    
-    private let from: ValueType
-    private let to: ValueType
+
+    /// The first value contained within the interval.
+    public let from: ValueType
+
+    /// The last value contained within the interval.
+    public let to: ValueType
 
     /// Initialize a `ParallaxInterval`, which defines a bidirectional interval.
     ///
