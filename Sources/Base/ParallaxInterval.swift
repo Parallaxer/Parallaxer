@@ -17,9 +17,7 @@ public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
     ///   - to:     The end of the interval.
     /// - Returns: A parallax interval, which may be used with parallax transformations. `nil` if `from` and
     /// `to` are the same.
-    public init?(from: ValueType,
-                 to: ValueType)
-    {
+    public init?(from: ValueType, to: ValueType) {
         guard from != to else {
             return nil
         }
@@ -28,18 +26,12 @@ public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
         self.to = to
     }
     
-    func position(
-        forValue value: ValueType)
-        -> Double
-    {
-        return ValueType.unitPosition(forValue: value, from: from, to: to)
+    func position(forValue value: ValueType) -> Double {
+        return ValueType.position(forValue: value, from: from, to: to)
     }
     
-    func value(
-        atPosition position: Double)
-        -> ValueType
-    {
-        return ValueType.value(atUnitPosition: position, from: from, to: to)
+    func value(atPosition position: Double) -> ValueType {
+        return ValueType.value(atPosition: position, from: from, to: to)
     }
 }
 

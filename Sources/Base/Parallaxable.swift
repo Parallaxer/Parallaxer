@@ -3,7 +3,7 @@ public protocol Parallaxable: Equatable {
     
     /// Convert the given `value` to a unit position on the interval [`from`, `to`].
     ///
-    /// # 🔢 Unit-position formula:
+    /// # 🔢 Position formula:
     /// ```
     /// (value - from) / (to - from)
     /// ```
@@ -15,27 +15,19 @@ public protocol Parallaxable: Equatable {
     ///   - from:   The start of the interval.
     ///   - to:     The end of the interval.
     /// - Returns: A position on the unit interval, [0, 1].
-    static func unitPosition(
-        forValue value: Self,
-        from: Self,
-        to: Self)
-        -> Double
+    static func position(forValue value: Self, from: Self, to: Self) -> Double
     
-    /// Convert the given `unitPosition` to a value on the interval [`from`, `to`].
+    /// Convert the given `position` to a value on the interval [`from`, `to`].
     ///
-    /// # 🔢 Parallax value formula:
+    /// # 🔢 Value formula:
     /// ```
-    /// from * (1 - unitPosition) + to * unitPosition
+    /// from * (1 - position) + to * position
     /// ```
     ///
     /// - Parameters:
-    ///   - unitPosition:   A position on the unit interval, [0, 1].
-    ///   - from:           The start of the interval.
-    ///   - to:             The end of the interval.
+    ///   - position:   A position on the unit interval, [0, 1].
+    ///   - from:       The start of the interval.
+    ///   - to:         The end of the interval.
     /// - Returns: A value on the specified interval, [`from`, `to`].
-    static func value(
-        atUnitPosition unitPosition: Double,
-        from: Self,
-        to: Self)
-        -> Self
+    static func value(atPosition position: Double, from: Self, to: Self) -> Self
 }

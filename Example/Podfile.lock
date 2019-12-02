@@ -1,11 +1,9 @@
 PODS:
   - Parallaxer (4.0.0):
-    - Parallaxer/Core (= 4.0.0)
+    - Parallaxer/RxSwift (= 4.0.0)
   - Parallaxer/Base (4.0.0)
-  - Parallaxer/Core (4.0.0):
+  - Parallaxer/RxSwift (4.0.0):
     - Parallaxer/Base
-    - Parallaxer/Rx
-  - Parallaxer/Rx (4.0.0):
     - RxCocoa
     - RxSwift
   - RxBlocking (5.0.0):
@@ -39,7 +37,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Parallaxer: 48119a807d6e0e0f4a6cf8e3585775a9eed79784
+  Parallaxer: 1d2c5deb45eb8ad393b38f0d4f313e65fed22e27
   RxBlocking: c67185d26498ea3cbe3e121917c3c16739e43123
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18

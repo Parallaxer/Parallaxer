@@ -14,39 +14,35 @@ public struct ParallaxTransform<ValueType: Parallaxable>: Equatable {
     /// An interval denoting the bounds of the transform.
     public let interval: ParallaxInterval<ValueType>
 
-    /// A number on the unit interval, [0, 1], which refers to a value on `interval`. 0 refers to the
-    /// beginning of the interval and 1 refers to the end.
+    /// A point on the unit interval, [0, 1], which refers to a value on `interval`. (0 refers to the
+    /// beginning of the interval and 1 refers to the end.)
     ///
-    /// A unit position may be less than 0 or greater than 1 if it refers to a value outside the bounds of
+    /// A position may be less than 0 or greater than 1 if it refers to a value outside the bounds of
     /// `interval`.
-    public let unitPosition: Double
+    public let position: Double
 
-    /// Initialize a parallax transform with an interval denoting its bounds, and a value to which the its
-    /// unit position shall refer.
+    /// Initialize a parallax transform with an interval denoting its bounds, and a value to which its unit
+    /// position shall refer.
     ///
-    /// - Parameter interval: The interval on which change is expected to occur.
-    /// - Parameter parallaxValue: A value to which the transform's unit position shall refer.
-    public init(interval: ParallaxInterval<ValueType>,
-                parallaxValue: ValueType)
-    {
+    /// - Parameter interval:       The interval on which change is expected to occur.
+    /// - Parameter parallaxValue:  A value to which the transform's unit position shall refer.
+    public init(interval: ParallaxInterval<ValueType>, parallaxValue: ValueType) {
         self.interval = interval
-        self.unitPosition = interval.position(forValue: parallaxValue)
+        self.position = interval.position(forValue: parallaxValue)
     }
 
     /// Internal initializer.
     /// - Parameter interval: The interval on which change is expected to occur.
-    /// - Parameter unitPosition: A number between [0, 1] denoting a value on `interval`.
-    init(interval: ParallaxInterval<ValueType>,
-         unitPosition: Double)
-    {
+    /// - Parameter position: A number between [0, 1] denoting a value on `interval`.
+    init(interval: ParallaxInterval<ValueType>, position: Double) {
         self.interval = interval
-        self.unitPosition = unitPosition
+        self.position = position
     }
 }
 
 extension ParallaxTransform {
 
-    /// A value on `interval`, as indicated by `unitPosition`; this is suitable for the user interface.
+    /// A value on `interval`, as indicated by `position`; this is suitable for the user interface.
     ///
     /// By default, values are not strictly bounded by the transform interval; if that behavior is desired,
     /// first apply a clamp transformation:
@@ -55,7 +51,7 @@ extension ParallaxTransform {
     /// ```
     /// - Returns: A value on the receiver's transform interval, suitable for the user interface.
     public func parallaxValue() -> ValueType {
-        return interval.value(atPosition: unitPosition)
+        return interval.value(atPosition: position)
     }
 
     /// Create a new parallax transform which scales `parallaxValue` such that it is relative to the
@@ -90,7 +86,7 @@ extension ParallaxTransform {
         to otherInterval: ParallaxInterval<ResultValueType>)
         -> ParallaxTransform<ResultValueType>
     {
-        return ParallaxTransform<ResultValueType>(interval: otherInterval, unitPosition: unitPosition)
+        return ParallaxTransform<ResultValueType>(interval: otherInterval, position: position)
     }
 
     /// Create a new parallax transform which alters the receiver's unit position in accordance with the given
@@ -122,12 +118,9 @@ extension ParallaxTransform {
     /// - Returns: A new parallax transform, with the receiver's unit position transformed by the given
     /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
     /// receiver's interval.
-    public func reposition(
-        with curve: PositionCurve)
-        -> ParallaxTransform<ValueType>
-    {
-        let transformedPosition = curve.transform(position: unitPosition)
-        return ParallaxTransform(interval: interval, unitPosition: transformedPosition)
+    public func reposition(with curve: PositionCurve) -> ParallaxTransform<ValueType> {
+        let transformedPosition = curve.transform(position: position)
+        return ParallaxTransform(interval: interval, position: transformedPosition)
     }
 
     /// Create a new parallax transform which preserves the receiver's `parallaxValue`, but alters its unit
@@ -159,13 +152,10 @@ extension ParallaxTransform {
     /// - Parameter subinterval: A subset of the receiver's interval.
     /// - Returns: A new parallax transform which maps the receiver's `parallaxValue` to the same value, but
     /// on the given `subinterval`.
-    public func focus(
-        subinterval: ParallaxInterval<ValueType>)
-        -> ParallaxTransform<ValueType>
-    {
-        let valueOnPriorInterval = interval.value(atPosition: unitPosition)
+    public func focus(subinterval: ParallaxInterval<ValueType>) -> ParallaxTransform<ValueType> {
+        let valueOnPriorInterval = interval.value(atPosition: position)
         let transformedPosition = subinterval.position(forValue: valueOnPriorInterval)
-        return ParallaxTransform(interval: subinterval, unitPosition: transformedPosition)
+        return ParallaxTransform(interval: subinterval, position: transformedPosition)
     }
 }
 
@@ -174,7 +164,7 @@ extension ParallaxTransform: CustomStringConvertible {
     public var description: String {
         return "ParallaxTransform<\(String(describing: ValueType.self))>("
             + "interval: \(interval)"
-            + ", unitPosition: \(unitPosition)"
+            + ", position: \(position)"
             + ", parallaxValue: \(parallaxValue())"
             + ")"
     }

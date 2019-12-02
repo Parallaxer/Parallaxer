@@ -3,7 +3,7 @@ import RxCocoa
 
 extension ObservableType {
 
-    /// A value on the receiver's `interval`, as indicated by its `unitPosition`.
+    /// A value on the receiver's `interval`, as indicated by its `position`.
     ///
     /// By default, values are not strictly bounded by the transform interval; if that behavior is desired,
     /// first apply a clamp transformation:

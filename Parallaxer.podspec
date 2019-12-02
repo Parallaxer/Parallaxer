@@ -10,13 +10,7 @@ Pod::Spec.new do |s|
                                   :tag => s.version.to_s }
   s.swift_version             = "5"
 
-  s.default_subspec           = "Core"
-
-  ### All functionality, with external dependencies.
-  s.subspec "Core" do |ss|
-    ss.dependency "Parallaxer/Base"
-    ss.dependency "Parallaxer/Rx"
-  end
+  s.default_subspec           = "RxSwift"
 
   ### Base Parallaxer implementation, without external dependencies.
   s.subspec "Base" do |ss|
@@ -24,9 +18,10 @@ Pod::Spec.new do |s|
   end
 
   ### RxSwift integration
-  s.subspec "Rx" do |ss|
+  s.subspec "RxSwift" do |ss|
+    ss.dependency "Parallaxer/Base"
     ss.dependency "RxSwift"
     ss.dependency "RxCocoa"
-    ss.source_files = "Sources/Rx/**/*.swift"
+    ss.source_files = "Sources/RxSwift/**/*.swift"
   end
 end
