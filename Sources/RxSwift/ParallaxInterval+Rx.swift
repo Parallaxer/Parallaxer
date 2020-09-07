@@ -5,7 +5,7 @@ extension ParallaxInterval: ReactiveCompatible {}
 
 extension Reactive {
 
-    /// Create a observable which signals a `ParallaxInterval` constructed from the given `from` and `to`
+    /// Create an observable which signals a `ParallaxInterval` constructed from the given `from` and `to`
     /// observables.
     ///
     /// - Parameters:
@@ -23,7 +23,7 @@ extension Reactive {
             .skipNil()
     }
 
-    /// Create a observable which signals a `ParallaxInterval` constructed from the given `from` and `to`
+    /// Create an observable which signals a `ParallaxInterval` constructed from the given `from` and `to`
     /// values.
     ///
     /// - Parameters:

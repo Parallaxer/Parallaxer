@@ -1,6 +1,4 @@
-/// The result of a parallax operation.
-///
-/// A parallax transform is the result of one or more parallax operations, which can be performed
+///  A parallax transform is the result of one or more parallax operations, which can be performed
 /// using any of the following operators:
 ///   - `scale(to:)`
 ///   - `reposition(with:)`
