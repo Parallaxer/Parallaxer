@@ -1,6 +1,6 @@
 import Foundation
 
-/// Specifies how a position is transformed as it changes. A position is specified on the unit interval,
+/// Specifies how a position changes. A position is specified on the unit interval,
 /// [0, 1], but it may be less than 0 or greater than 1.
 public enum PositionCurve {
 
@@ -13,7 +13,7 @@ public enum PositionCurve {
     /// Position oscillates over the interval, up to `numberOfTimes`.
     case oscillate(numberOfTimes: Double)
 
-    /// The position transformation may be customized with a closure.
+    /// The position may be customized with a closure.
     case custom((Double) -> Double)
     
     func transform(position: Double) -> Double {

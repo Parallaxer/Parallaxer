@@ -6,8 +6,8 @@ extension ObservableType where Element: Parallaxable {
     /// Create a new parallax transform on the given `interval`, with the sequence's element as its
     /// `parallaxValue`.
     ///
-    /// A parallax transform is the result of one or more parallax transformations, which can be performed
-    /// using any of the following operators:
+    /// A parallax transform is the result of one or more parallax operations, which can be performed using
+    /// any of the following operators:
     ///   - `parallaxScale(to:)`
     ///   - `parallaxReposition(with:)`
     ///   - `parallaxFocus(subinterval:)`

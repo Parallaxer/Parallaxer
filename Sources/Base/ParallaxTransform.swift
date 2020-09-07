@@ -1,6 +1,6 @@
-/// The result of a parallax transformation, which may be further transformed.
+/// The result of a parallax operation.
 ///
-/// A parallax transform is the result of one or more parallax transformations, which can be performed
+/// A parallax transform is the result of one or more parallax operations, which can be performed
 /// using any of the following operators:
 ///   - `scale(to:)`
 ///   - `reposition(with:)`
@@ -45,7 +45,7 @@ extension ParallaxTransform {
     /// A value on `interval`, as indicated by `position`; this is suitable for the user interface.
     ///
     /// By default, values are not strictly bounded by the transform interval; if that behavior is desired,
-    /// first apply a clamp transformation:
+    /// first apply a clamp operation:
     /// ```
     /// reposition(with: .clampToUnitInterval)
     /// ```

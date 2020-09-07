@@ -7,12 +7,6 @@ Craft parallax effects in Swift.
 
 ## Installation
 
-#### With [Carthage](https://github.com/Carthage/Carthage)
-
-```
-github "Parallaxer/Parallaxer"
-```
-
 #### With [CocoaPods](https://github.com/CocoaPods/CocoaPods)
 
 ```
@@ -48,14 +42,16 @@ During your daily commute, you leave your home, hop on some form of transportati
 arrive at work. Along the way, you'll pass by various landmarks that you've seen dozens of times before, 
 which give you a sense of where you are in relation to your home and the office.
 
-If you modeled your commute as a parallax transform, its interval might be [0 miles, 12 miles] and its position would then indicate where you are in relation to your journey.
+If you modeled your commute as a parallax transform, its interval might be [0 miles, 12 miles] and its 
+position would then indicate where you are in relation to your journey.
 
-As you leave your home, the transform's position is 0, and when you reach the office, the position is 1. Each landmark along your commute is represented by a different position between 0 and 1.
+As you leave your home, the transform's position is 0, and when you reach the office, the position is 1. 
+Each landmark along your commute is represented by a different position between 0 and 1.
 
-Parallax transformations may be performed which alter the receiving transform's interval and/or its unit 
-position. Each transformation results in a new transform which preserves some property of the original.
+Parallax operators alter a transform's interval and/or its unit position. Each operation results 
+in a new transform which preserves some property of the original.
 
-#### Supported transformations:
+#### Operators:
 
 - `scale(to: ParallaxInterval)`
     - Alter the interval of the receiving transform, preserving its position.

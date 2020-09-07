@@ -15,8 +15,7 @@ public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
     /// - Parameters:
     ///   - from:   The start of the interval.
     ///   - to:     The end of the interval.
-    /// - Returns: A parallax interval, which may be used with parallax transformations. `nil` if `from` and
-    /// `to` are the same.
+    /// - Returns: A parallax interval.. `nil` if `from` and `to` are the same.
     public init?(from: ValueType, to: ValueType) {
         guard from != to else {
             return nil
