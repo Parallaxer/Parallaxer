@@ -119,9 +119,26 @@ final class RxParallaxTransformTests: XCTestCase {
     }
 }
 
-// MARK: Source examples
+extension RxParallaxTransformTests {
+    
+    // MARK: Error cases
+    
+    func testZeroLengthIntervalError() {
+        let input: [Double] = [
+            0, 2, 4, 6, 8, 10
+        ]
+
+        let parallax = Observable.from(input)
+            .parallax(over: .interval(from: 1, to: 1))
+            .parallaxValue()
+
+        XCTAssertThrowsError(try parallax.toBlocking().toArray())
+    }
+}
 
 extension RxParallaxTransformTests {
+
+    // MARK: Source examples
 
     func testScaleExample() {
         let receiver = Observable<Double>.just(3)
@@ -157,9 +174,9 @@ extension RxParallaxTransformTests {
     }
 }
 
-// MARK: Readme examples
-
 extension RxParallaxTransformTests {
+    
+    // MARK: Readme examples
 
     func testPercentageReadmeExample() {
         let input: [Double] = [

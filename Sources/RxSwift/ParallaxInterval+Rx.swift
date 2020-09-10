@@ -20,7 +20,6 @@ extension Reactive {
         return Observable
             .combineLatest(from, to)
             .map(ParallaxInterval.init(from:to:))
-            .skipNil()
     }
 
     /// Create an observable which signals a `ParallaxInterval` constructed from the given `from` and `to`

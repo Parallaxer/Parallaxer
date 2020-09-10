@@ -9,16 +9,16 @@ public struct ParallaxInterval<ValueType: Parallaxable>: Equatable {
 
     /// Initialize a `ParallaxInterval`, which defines a bidirectional interval.
     ///
-    /// - Warning: ⚠️ Single value intervals, where `from` and `to` are equal, are not supported and shall
-    /// result in a `nil` interval.
+    /// - Warning: ⚠️ Zero-length intervals, where `from` and `to` are equal, aren't supported because they
+    /// cause a divide-by-zero runtime error.
     ///
     /// - Parameters:
     ///   - from:   The start of the interval.
     ///   - to:     The end of the interval.
     /// - Returns: A parallax interval.. `nil` if `from` and `to` are the same.
-    public init?(from: ValueType, to: ValueType) {
+    public init(from: ValueType, to: ValueType) throws {
         guard from != to else {
-            return nil
+            throw ParallaxError.zeroLengthInterval
         }
         
         self.from = from

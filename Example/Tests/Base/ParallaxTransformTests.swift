@@ -9,11 +9,11 @@ final class ParallaxTransformTests: XCTestCase {
 
     func testScaleExample() {
         let receiver = ParallaxTransform(
-            interval: ParallaxInterval(from: 0, to: 3)!,
+            interval: try! ParallaxInterval(from: 0, to: 3),
             parallaxValue: 3)
 
         let result = receiver
-            .scale(to: ParallaxInterval<CGFloat>(from: 0, to: 6)!)
+            .scale(to: try! ParallaxInterval<CGFloat>(from: 0, to: 6))
             .parallaxValue()
 
         XCTAssertEqual(result, 6)
@@ -21,7 +21,7 @@ final class ParallaxTransformTests: XCTestCase {
 
     func testRepositionExample() {
         let receiver = ParallaxTransform(
-            interval: ParallaxInterval(from: 0, to: 3)!,
+            interval: try! ParallaxInterval(from: 0, to: 3),
             parallaxValue: 4)
 
         let result = receiver
@@ -33,11 +33,11 @@ final class ParallaxTransformTests: XCTestCase {
 
     func testFocusExample() {
         let receiver = ParallaxTransform(
-            interval: ParallaxInterval(from: 0, to: 4)!,
+            interval: try! ParallaxInterval(from: 0, to: 4),
             parallaxValue: 1)
 
         let result = receiver
-            .focus(subinterval: ParallaxInterval(from: 2, to: 4)!)
+            .focus(subinterval: try! ParallaxInterval(from: 2, to: 4))
             .parallaxValue()
 
         XCTAssertEqual(result, 1)

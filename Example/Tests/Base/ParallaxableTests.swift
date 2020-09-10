@@ -19,8 +19,8 @@ final class ParallaxableTests: XCTestCase {
         XCTAssertEqual(CGFloat.value(atPosition: 1, from: from, to: to), 16)
         XCTAssertEqual(CGFloat.value(atPosition: 1.5, from: from, to: to), 20)
 
-        XCTAssertNil(ParallaxInterval(from: from, to: from))
-        XCTAssertNil(ParallaxInterval(from: to, to: to))
+        XCTAssertThrowsError(try ParallaxInterval(from: from, to: from))
+        XCTAssertThrowsError(try ParallaxInterval(from: to, to: to))
     }
     
     func testCGPointType() {
@@ -39,8 +39,8 @@ final class ParallaxableTests: XCTestCase {
         XCTAssertEqual(CGPoint.value(atPosition: 1, from: from, to: to), CGPoint(x: 16, y: 32))
         XCTAssertEqual(CGPoint.value(atPosition: 1.5, from: from, to: to), CGPoint(x: 20, y: 40))
 
-        XCTAssertNil(ParallaxInterval(from: from, to: from))
-        XCTAssertNil(ParallaxInterval(from: to, to: to))
+        XCTAssertThrowsError(try ParallaxInterval(from: from, to: from))
+        XCTAssertThrowsError(try ParallaxInterval(from: to, to: to))
     }
     
     func testDoubleType() {
@@ -59,8 +59,8 @@ final class ParallaxableTests: XCTestCase {
         XCTAssertEqual(Double.value(atPosition: 1, from: from, to: to), 16)
         XCTAssertEqual(Double.value(atPosition: 1.5, from: from, to: to), 20)
 
-        XCTAssertNil(ParallaxInterval(from: from, to: from))
-        XCTAssertNil(ParallaxInterval(from: to, to: to))
+        XCTAssertThrowsError(try ParallaxInterval(from: from, to: from))
+        XCTAssertThrowsError(try ParallaxInterval(from: to, to: to))
     }
     
     func testFloatType() {
@@ -79,7 +79,7 @@ final class ParallaxableTests: XCTestCase {
         XCTAssertEqual(Float.value(atPosition: 1, from: from, to: to), 16)
         XCTAssertEqual(Float.value(atPosition: 1.5, from: from, to: to), 20)
 
-        XCTAssertNil(ParallaxInterval(from: from, to: from))
-        XCTAssertNil(ParallaxInterval(from: to, to: to))
+        XCTAssertThrowsError(try ParallaxInterval(from: from, to: from))
+        XCTAssertThrowsError(try ParallaxInterval(from: to, to: to))
     }
 }
