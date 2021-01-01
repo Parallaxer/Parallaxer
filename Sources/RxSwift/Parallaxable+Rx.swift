@@ -8,8 +8,8 @@ extension ObservableType where Element: Parallaxable {
     ///
     /// A parallax transform is the result of one or more parallax operations, which can be performed using
     /// any of the following operators:
-    ///   - `parallaxScale(to:)`
-    ///   - `parallaxReposition(with:)`
+    ///   - `parallaxRelate(to:)`
+    ///   - `parallaxMorph(with:)`
     ///   - `parallaxFocus(subinterval:)`
     ///
     /// A parallax transform can be converted back into a value suitable for the user interface with the

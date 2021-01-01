@@ -27,7 +27,7 @@ final class RxParallaxTransformTests: XCTestCase {
 
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
         let expectedOutput: [Double] = [
@@ -46,8 +46,8 @@ final class RxParallaxTransformTests: XCTestCase {
 
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
-            .parallaxReposition(with: .just(.clampToUnitInterval))
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxMorph(with: .just(.clampToUnitInterval))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
         let expectedOutput: [Double] = [
@@ -65,7 +65,7 @@ final class RxParallaxTransformTests: XCTestCase {
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
             .parallaxFocus(subinterval: .interval(from: 2, to: 4))
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
         let expectedOutput: [Double] = [
@@ -83,8 +83,8 @@ final class RxParallaxTransformTests: XCTestCase {
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
             .parallaxFocus(subinterval: .interval(from: 2, to: 4))
-            .parallaxReposition(with: .just(.clampToUnitInterval))
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxMorph(with: .just(.clampToUnitInterval))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
         let expectedOutput: [Double] = [
@@ -105,7 +105,7 @@ final class RxParallaxTransformTests: XCTestCase {
             .parallax(over: .interval(from: CGPoint(x: 2, y: 2), to: CGPoint(x: 4, y: 4)))
 
         let doubleTransform = pointTransform
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
 
         let parallax = doubleTransform
             .parallaxValue()
@@ -140,23 +140,23 @@ extension RxParallaxTransformTests {
 
     // MARK: Source examples
 
-    func testScaleExample() {
+    func testRelateExample() {
         let receiver = Observable<Double>.just(3)
             .parallax(over: .interval(from: 0, to: 3))
 
         let result = receiver
-            .parallaxScale(to: ParallaxInterval<CGFloat>.rx.interval(from: 0, to: 6))
+            .parallaxRelate(to: ParallaxInterval<CGFloat>.rx.interval(from: 0, to: 6))
             .parallaxValue()
 
         XCTAssertEqual(try result.toBlocking().first(), 6)
     }
 
-    func testRepositionExample() {
+    func testMorphExample() {
         let receiver = Observable<Double>.just(4)
             .parallax(over: .interval(from: 0, to: 3))
 
         let result = receiver
-            .parallaxReposition(with: .just(.clampToUnitInterval))
+            .parallaxMorph(with: .just(.clampToUnitInterval))
             .parallaxValue()
 
         XCTAssertEqual(try result.toBlocking().first(), 3)
@@ -187,7 +187,7 @@ extension RxParallaxTransformTests {
             .parallax(over: .interval(from: 0, to: 4))
 
         let percentage = root
-            .parallaxScale(to: .interval(from: 0, to: 100))
+            .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
         let expectedOutput: [Double] = [

@@ -1,8 +1,8 @@
-///  A parallax transform is the result of one or more parallax operations, which can be performed
-/// using any of the following operators:
-///   - `scale(to:)`
-///   - `reposition(with:)`
-///   - `focus(subinterval:)`
+/// A parallax transform is the result of one or more parallax operations, which can be performed using any of
+/// the following operators:
+///   - `relate(to:)`
+///   - `morph(with:)`
+///   - `focus(on:)`
 ///
 /// A parallax transform can be converted back into a value suitable for the user interface with the
 /// following operator:
@@ -45,23 +45,23 @@ extension ParallaxTransform {
     /// By default, values are not strictly bounded by the transform interval; if that behavior is desired,
     /// first apply a clamp operation:
     /// ```
-    /// reposition(with: .clampToUnitInterval)
+    /// morph(with: .clampToUnitInterval)
     /// ```
     /// - Returns: A value on the receiver's transform interval, suitable for the user interface.
     public func parallaxValue() -> ValueType {
         return interval.value(atPosition: position)
     }
 
-    /// Create a new parallax transform which scales `parallaxValue` such that it is relative to the
-    /// receiver's unit position, but on the given `otherInterval`, and is of type, `ResultValueType`.
+    /// Transform the receiver such that the resulting value is proportional to the given `newInterval`, and
+    /// is of type `ResultValueType`.
     ///
     /// # Resulting transform characteristics:
-    ///   - The interval is the given `otherInterval`.
+    ///   - The interval is the given `newInterval`.
     ///   - The receiver's unit position is preserved.
-    ///   - `parallaxValue` is relative to the receiver's unit position, but on the given `otherInterval`, and
+    ///   - `parallaxValue` is relative to the receiver's unit position, but on the given `newInterval`, and
     ///   is of type, `ResultValueType`.
     ///
-    /// # Ex: Scale values from a Double-typed interval [0, 3], to a CGFloat-typed interval, [0, 6]:
+    /// # Ex: Relate values from a Double-typed interval [0, 3], to a CGFloat-typed interval, [0, 6]:
     ///     // receiving transform:
     ///     //   [0                 3]                      receiver's interval: [0, 3]
     ///     //    0       .5       (1)                      receiver's position: 1
@@ -75,28 +75,26 @@ extension ParallaxTransform {
     ///     //    0                .5                 (1)   result position: 1 (unchanged)
     ///     //    0     1     2     3     4      5    (6)   result value: 6
     ///     let result = receiver
-    ///         .scale(to: ParallaxInterval<CGFloat>(from: 0, to: 6)!)
+    ///         .relate(to: ParallaxInterval<CGFloat>(from: 0, to: 6)!)
     ///
-    /// - Parameter interval: The interval of the resulting transform.
+    /// - Parameter newInterval: The interval of the resulting transform.
     /// - Returns: A new parallax transform, with a `parallaxValue` relative to the receiver's unit position,
-    ///  but on the given `otherInterval`, and of type, `ResultValueType`.
-    public func scale<ResultValueType>(
-        to otherInterval: ParallaxInterval<ResultValueType>)
+    ///  but on the given `newInterval`, and of type, `ResultValueType`.
+    public func relate<ResultValueType>(
+        to newInterval: ParallaxInterval<ResultValueType>)
         -> ParallaxTransform<ResultValueType>
     {
-        return ParallaxTransform<ResultValueType>(interval: otherInterval, position: position)
+        return ParallaxTransform<ResultValueType>(interval: newInterval, position: position)
     }
 
-    /// Create a new parallax transform which alters the receiver's unit position in accordance with the given
-    /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
-    /// receiver's interval.
+    /// Transform the receiver such that the resulting position respects the given `curve` function.
     ///
     /// # Resulting transform characteristics:
     ///   - The receiver's interval is preserved.
     ///   - The unit position has changed in accordance with the curve function.
     ///   - `parallaxValue` is relative to the new unit position, on the receiver's interval.
     ///
-    /// # Ex: Reposition such that values are clamped to interval, [0, 3]:
+    /// # Ex: Morph such that values are clamped to interval, [0, 3]:
     ///     // receiving transform:
     ///     //        [1           3]           receiver's interval: [1, 3]
     ///     //  ...    0    .5     1  (1.5)     receiver's position: 1.5
@@ -110,28 +108,26 @@ extension ParallaxTransform {
     ///     //        >0    .5    (1)<  1.5     result position: 1
     ///     //   0    >1     2    (3)<   4      result value: 3
     ///     let result = receiver
-    ///         .reposition(with: .clampToUnitInterval)
+    ///         .morph(with: .clampToUnitInterval)
     ///
     /// - Parameter curve: The curve with which to alter the receiver's unit position.
     /// - Returns: A new parallax transform, with the receiver's unit position transformed by the given
     /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
     /// receiver's interval.
-    public func reposition(with curve: PositionCurve) -> ParallaxTransform<ValueType> {
+    public func morph(with curve: PositionCurve) -> ParallaxTransform<ValueType> {
         let transformedPosition = curve.transform(position: position)
         return ParallaxTransform(interval: interval, position: transformedPosition)
     }
 
-    /// Create a new parallax transform which preserves the receiver's `parallaxValue`, but alters its unit
-    /// position such that it corresponds to the given `subinterval`.
-    ///
-    /// - Note: `subinterval` need not be a strict subset of the receiver's interval.
+    /// Transform the receiver such that the resulting position reflects progress over a portion of the
+    /// receiver's interval, given by `portionInterval`.
     ///
     /// # Resulting transform characteristics:
-    ///   - The interval is `subinterval`.
+    ///   - The interval is `portionInterval`.
     ///   - The unit position has changed such that the receiver's `parallaxValue` is preserved.
     ///   - The receiver's `parallaxValue` is preserved.
     ///
-    /// # Ex: Focus the subinterval, [2, 4]:
+    /// # Ex: Focus the portionInterval, [2, 4]:
     ///     // receiving transform:
     ///     //   [0                       4]   receiver's interval: [0, 4]
     ///     //   [0    .25   .5    .75    1]   receiver's position: .25
@@ -141,26 +137,29 @@ extension ParallaxTransform {
     ///         value: 1)
     ///
     ///     // resulting transform:
-    ///     //               [2           4]   `subinterval`: [2, 4]
+    ///     //               [2           4]   `portionInterval`: [2, 4]
     ///     //   -1   -.5     0    .5     1    result position: -.5
     ///     //    0    (1)    2     3     4    result value: 1 (unchanged)
     ///     let result = receiver
-    ///         .focus(subinterval: ParallaxInterval(from: 2, to: 4)!)
+    ///         .changeIntervalAndPreserveValue(ParallaxInterval(from: 2, to: 4)!)
     ///
-    /// - Parameter subinterval: A subset of the receiver's interval.
+    /// - Parameter portionInterval: The interval of the resulting transform.
     /// - Returns: A new parallax transform which maps the receiver's `parallaxValue` to the same value, but
-    /// on the given `subinterval`.
-    public func focus(subinterval: ParallaxInterval<ValueType>) -> ParallaxTransform<ValueType> {
+    /// on the given `portionInterval`.
+    public func focus(
+        on portionInterval: ParallaxInterval<ValueType>)
+        -> ParallaxTransform<ValueType>
+    {
         let valueOnPriorInterval = interval.value(atPosition: position)
-        let transformedPosition = subinterval.position(forValue: valueOnPriorInterval)
-        return ParallaxTransform(interval: subinterval, position: transformedPosition)
+        let transformedPosition = portionInterval.position(forValue: valueOnPriorInterval)
+        return ParallaxTransform(interval: portionInterval, position: transformedPosition)
     }
 }
 
 extension ParallaxTransform: CustomStringConvertible {
 
     public var description: String {
-        return "ParallaxTransform<\(String(describing: ValueType.self))>("
+        return "ParallaxTransform<\( String(describing: ValueType.self))>("
             + "interval: \(interval)"
             + ", position: \(position)"
             + ", parallaxValue: \(parallaxValue())"

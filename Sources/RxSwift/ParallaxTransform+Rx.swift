@@ -8,7 +8,7 @@ extension ObservableType {
     /// By default, values are not strictly bounded by the transform interval; if that behavior is desired,
     /// first apply a clamp operation:
     /// ```
-    /// parallaxReposition(.just(.clampToUnitInterval))
+    /// parallaxMorph(.just(.clampToUnitInterval))
     /// ```
     /// - Returns: A value on the receiver's transform interval, suitable for the user interface.
     public func parallaxValue<ValueType>() -> Observable<ValueType>
@@ -28,7 +28,7 @@ extension ObservableType {
     ///   - `parallaxValue` is relative to the receiver's unit position, but on the given `otherInterval`, and
     ///     is of type, `ResultValueType`.
     ///
-    /// # Ex: Scale values from a Double-typed interval [0, 3], to a CGFloat-typed interval, [0, 6]:
+    /// # Ex: Relate values from a Double-typed interval [0, 3], to a CGFloat-typed interval, [0, 6]:
     ///     // receiving transform:
     ///     //   [0                 3]                      receiver's interval: [0, 3]
     ///     //    0       .5       (1)                      receiver's position: 1
@@ -41,20 +41,20 @@ extension ObservableType {
     ///     //    0                .5                 (1)   result position: 1 (unchanged)
     ///     //    0     1     2     3     4      5    (6)   result value: 6
     ///     let result = receiver
-    ///         .parallaxScale(to: ParallaxInterval<CGFloat>.rx.interval(from: 0, to: 6))
+    ///         .parallaxRelate(to: ParallaxInterval<CGFloat>.rx.interval(from: 0, to: 6))
     ///
     /// - Parameter otherInterval: The interval of the resulting transform.
     /// - Returns: A new parallax transform, with a `parallaxValue` relative to the receiver's unit position,
     ///  but on the given `otherInterval`, and of type, `ResultValueType`.
-    public func parallaxScale<ValueType, ResultValueType>(
+    public func parallaxRelate<ValueType, ResultValueType>(
         to otherInterval: Observable<ParallaxInterval<ResultValueType>>)
         -> Observable<ParallaxTransform<ResultValueType>>
         where Element == ParallaxTransform<ValueType>
     {
         return Observable
             .combineLatest(self, otherInterval)
-            .map { transform, interval in
-                return transform.scale(to: interval)
+            .map { transform, otherInterval in
+                return transform.relate(to: otherInterval)
             }
     }
 
@@ -67,7 +67,7 @@ extension ObservableType {
     ///   - The unit position has changed in accordance with the curve function.
     ///   - `parallaxValue` is relative to the new unit position, on the receiver's interval.
     ///
-    /// # Ex: Reposition such that values are clamped to interval, [0, 3]:
+    /// # Ex: Morph such that values are clamped to interval, [0, 3]:
     ///     // receiving transform:
     ///     //        [1           3]           receiver's interval: [1, 3]
     ///     //  ...    0    .5     1  (1.5)     receiver's position: 1.5
@@ -80,13 +80,13 @@ extension ObservableType {
     ///     //        >0    .5    (1)<  1.5     result position: 1
     ///     //   0    >1     2    (3)<   4      result value: 3
     ///     let result = receiver
-    ///         .parallaxReposition(with: .just(.clampToUnitInterval))
+    ///         .parallaxMorph(with: .just(.clampToUnitInterval))
     ///
     /// - Parameter curve: The curve with which to alter the receiver's unit position.
     /// - Returns: A new parallax transform, with the receiver's unit position transformed by the given
     /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
     /// receiver's interval.
-    public func parallaxReposition<ValueType>(
+    public func parallaxMorph<ValueType>(
         with curve: Observable<PositionCurve>)
         -> Observable<ParallaxTransform<ValueType>>
         where Element == ParallaxTransform<ValueType>
@@ -94,7 +94,7 @@ extension ObservableType {
         return Observable
             .combineLatest(self, curve)
             .map { transform, curve in
-                return transform.reposition(with: curve)
+                return transform.morph(with: curve)
             }
     }
 
@@ -134,7 +134,7 @@ extension ObservableType {
         return Observable
             .combineLatest(self, subinterval)
             .map { transform, subinterval in
-                return transform.focus(subinterval: subinterval)
+                return transform.focus(on: subinterval)
             }
     }
 }

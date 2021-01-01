@@ -53,11 +53,11 @@ in a new transform which preserves some property of the original.
 
 #### Operators:
 
-- `scale(to: ParallaxInterval)`
+- `relate(to: ParallaxInterval)`
     - Alter the interval of the receiving transform, preserving its position.
-- `reposition(with: PositionCurve)`
+- `morph(with: PositionCurve)`
     - Alter the position of the receiving transform, preserving its interval.
-- `focus(subinterval: ParallaxInterval)`
+- `focus(on: ParallaxInterval)`
     - Alter both the interval and position of the receiving transform, preserving its parallax value.
     
 ### `ParallaxInterval`:
@@ -122,7 +122,7 @@ let scrollingTransform = ParallaxTransform(
 
 // Relate the indicator's position to the scrolling transform.
 let indicatorPositionTransform = scrollingTransform
-    .scale(to: indicatorPositionInterval)
+    .relate(to: indicatorPositionInterval)
 ```
 
 #### Tie it all together:
@@ -150,7 +150,7 @@ override func viewDidLoad() {
 
     // Relate the indicator's position to the scrolling transform.
     let indicatorPositionTransform = scrollingTransform
-        .parallaxScale(to: indicatorPositionInterval)
+        .parallaxRelate(to: indicatorPositionInterval)
 
     // Finally, bind the indicator parallax value to the image view's center point.
     indicatorPositionTransform
