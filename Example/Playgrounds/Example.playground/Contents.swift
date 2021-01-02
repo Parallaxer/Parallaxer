@@ -6,64 +6,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-extension ObservableType {
-    
-    public func parallax(
-        over interval: Observable<ParallaxInterval<Element>>,
-        visualizer: ParallaxDebugView)
-        -> Observable<ParallaxTransform<Element>>
-        where Element: Parallaxable
-    {
-        let newTransform = parallax(over: interval)
-        visualizer.bindTransformOperation(newTransform.map { .started($0) })
-        return newTransform
-    }
-    
-    public func parallaxRelate<ValueType, ResultValueType>(
-        to otherInterval: Observable<ParallaxInterval<ResultValueType>>,
-        visualizer: ParallaxDebugView)
-        -> Observable<ParallaxTransform<ResultValueType>>
-        where Element == ParallaxTransform<ValueType>
-    {
-        let newTransform = parallaxRelate(to: otherInterval)
-        visualizer.bindTransformOperation(newTransform.map { .related($0) })
-        return newTransform
-    }
-    
-    public func parallaxMorph<ValueType>(
-        with curve: Observable<PositionCurve>,
-        visualizer: ParallaxDebugView)
-        -> Observable<ParallaxTransform<ValueType>>
-        where Element == ParallaxTransform<ValueType>
-    {
-        
-        let newTransform = parallaxMorph(with: curve)
-        let visualized = Observable
-            .combineLatest(newTransform, curve)
-            .map { transform, curve in
-                return TransformOperation.morphed(transform, curve)
-            }
-        visualizer.bindTransformOperation(visualized)
-        return newTransform
-    }
 
-    public func parallaxFocus<ValueType>(
-        subinterval: Observable<ParallaxInterval<ValueType>>,
-        visualizer: ParallaxDebugView)
-        -> Observable<ParallaxTransform<ValueType>>
-        where Element == ParallaxTransform<ValueType>
-    {
-        let transformBefore = self
-        let transformAfter = parallaxFocus(subinterval: subinterval)
-        let visualized = Observable
-            .combineLatest(transformBefore, transformAfter)
-            .map { transformBefore, transformAfter in
-                return TransformOperation.focused(transformBefore, transformAfter)
-            }
-        visualizer.bindTransformOperation(visualized)
-        return transformAfter
-    }
-}
 
 class MyViewController : UIViewController {
     
@@ -87,8 +30,8 @@ class MyViewController : UIViewController {
         return slider
     }()
     
-    private lazy var debugView: ParallaxDebugView = {
-        let debugView = ParallaxDebugView()
+    private lazy var debugView: ParallaxView = {
+        let debugView = ParallaxView()
         debugView.translatesAutoresizingMaskIntoConstraints = false
         return debugView
     }()

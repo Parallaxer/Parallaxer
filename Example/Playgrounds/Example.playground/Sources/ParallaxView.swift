@@ -10,6 +10,92 @@ public enum TransformOperation<ValueType: Parallaxable> {
     case focused(ParallaxTransform<ValueType>, ParallaxTransform<ValueType>) // before transform, after transform.
 }
 
+/// Renders parallax operations.
+public final class ParallaxView: UIView {
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
+    private var operations = [TransformOperation<CGFloat>]()
+    private var operationIndicesByName = [String: Int]()
+    
+    private let disposeBag = DisposeBag()
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(stackView)
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor).isActive = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func visualize<ValueType: Parallaxable>(
+        _ operation: Observable<TransformOperation<ValueType>>)
+    {
+        let title = operation
+            .map { operation -> String in
+                let formatPosition = { (position: Double) -> String in
+                    let positionInterval = try! ParallaxInterval(from: 0, to: 1)
+                    let positionTransform = ParallaxTransform(
+                        interval: positionInterval,
+                        parallaxValue: position)
+                    let percentageInterval = try! ParallaxInterval(from: 0, to: 100)
+                    let percentageValue = positionTransform
+                        .relate(to: percentageInterval)
+                        .parallaxValue()
+                    return "\(Int(percentageValue))%"
+                }
+                switch operation {
+                
+                case .started(let transform):
+                    return "parallax: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                case .related(let transform):
+                    return "relate: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                case .morphed(let transform, let curve):
+                    return "morph: \(curve)\nPosition: \(formatPosition(transform.position))"
+                case .focused(_, let transform):
+                    return "focus: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                }
+            }
+        
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .blue
+        titleLabel.numberOfLines = 3
+        titleLabel.font = .monospacedSystemFont(ofSize: 16, weight: .semibold)
+        
+        let transformView = ParallaxTransformView()
+        
+        let transformStackView = UIStackView(arrangedSubviews: [titleLabel, transformView])
+        transformStackView.axis = .vertical
+        transformStackView.spacing = 6
+        stackView.distribution = .equalSpacing
+
+        stackView.addArrangedSubview(transformStackView)
+        
+        transformView
+            .bindTransformOperation(operation)
+            .disposed(by: disposeBag)
+        
+        title
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+}
+
+/// Internal class for rending a single transform.
 final class ParallaxTransformView: UIView {
     
     private struct Constants {
@@ -174,85 +260,5 @@ final class ParallaxTransformView: UIView {
         boundaryView.heightAnchor.constraint(equalToConstant: Constants.boundarySize.height).isActive = true
         boundaryView.backgroundColor = Constants.boundaryColor
         return boundaryView
-    }
-}
-
-public final class ParallaxDebugView: UIView {
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
-    
-    private var operations = [TransformOperation<CGFloat>]()
-    private var operationIndicesByName = [String: Int]()
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubview(stackView)
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor).isActive = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func bindTransformOperation<ValueType: Parallaxable>(
-        _ operation: Observable<TransformOperation<ValueType>>)
-        -> Disposable
-    {
-        let title = operation
-            .map { operation -> String in
-                let formatPosition = { (position: Double) -> String in
-                    let positionInterval = try! ParallaxInterval(from: 0, to: 1)
-                    let positionTransform = ParallaxTransform(
-                        interval: positionInterval,
-                        parallaxValue: position)
-                    let percentageInterval = try! ParallaxInterval(from: 0, to: 100)
-                    let percentageValue = positionTransform
-                        .relate(to: percentageInterval)
-                        .parallaxValue()
-                    return "\(Int(percentageValue))%"
-                }
-                switch operation {
-                
-                case .started(let transform):
-                    return "parallax: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
-                case .related(let transform):
-                    return "relate: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
-                case .morphed(let transform, let curve):
-                    return "morph: \(curve)\nPosition: \(formatPosition(transform.position))"
-                case .focused(_, let transform):
-                    return "focus: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
-                }
-            }
-        
-        let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = .blue
-        titleLabel.numberOfLines = 3
-        titleLabel.font = .monospacedSystemFont(ofSize: 16, weight: .semibold)
-        
-        let transformView = ParallaxTransformView()
-        
-        let transformStackView = UIStackView(arrangedSubviews: [titleLabel, transformView])
-        transformStackView.axis = .vertical
-        transformStackView.spacing = 6
-        stackView.distribution = .equalSpacing
-
-        stackView.addArrangedSubview(transformStackView)
-    
-        return Disposables.create([
-            transformView.bindTransformOperation(operation),
-            title.bind(to: titleLabel.rx.text)
-        ])
     }
 }
