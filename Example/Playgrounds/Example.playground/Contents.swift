@@ -36,10 +36,13 @@ extension ObservableType {
         -> Observable<ParallaxTransform<ValueType>>
         where Element == ParallaxTransform<ValueType>
     {
+        
         let newTransform = parallaxMorph(with: curve)
         let visualized = Observable
             .combineLatest(newTransform, curve)
-            .map { transform, curve in TransformOperation.morphed(transform, curve) }
+            .map { transform, curve in
+                return TransformOperation.morphed(transform, curve)
+            }
         visualizer.bindTransformOperation(visualized)
         return newTransform
     }
@@ -50,9 +53,15 @@ extension ObservableType {
         -> Observable<ParallaxTransform<ValueType>>
         where Element == ParallaxTransform<ValueType>
     {
-        let newTransform = parallaxFocus(subinterval: subinterval)
-        visualizer.bindTransformOperation(newTransform.map { .focused($0) })
-        return newTransform
+        let transformBefore = self
+        let transformAfter = parallaxFocus(subinterval: subinterval)
+        let visualized = Observable
+            .combineLatest(transformBefore, transformAfter)
+            .map { transformBefore, transformAfter in
+                return TransformOperation.focused(transformBefore, transformAfter)
+            }
+        visualizer.bindTransformOperation(visualized)
+        return transformAfter
     }
 }
 
@@ -118,7 +127,6 @@ class MyViewController : UIViewController {
     func observeTestTransform() {
         let parallax = slider.rx.value
             .parallax(over: .interval(from: slider.minimumValue, to: slider.maximumValue), visualizer: debugView)
-            .parallaxRelate(to: .interval(from: 0, to: 15), visualizer: debugView)
             .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: debugView)
             .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: debugView)
             .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: debugView)
@@ -129,45 +137,6 @@ class MyViewController : UIViewController {
             .parallaxValue()
             .bind(to: cursorConstraint.rx.constant)
             .disposed(by: disposeBag)
-        
-        
-//        let start = slider.rx.value
-//            .parallax(over: .interval(from: slider.minimumValue, to: slider.maximumValue))
-//            .share()
-//        debugView.bindTransformOperation(start.map { return .started($0) })
-//
-        
-        
-//        let expandRight = start
-//            .parallaxRelate(to: .interval(from: 0, to: 15))
-//            .share()
-//        debugView.bindTransformOperation(expandRight.map { return .related($0) })
-//
-        
-        
-//        let expandLeft = expandRight
-//            .parallaxRelate(to: .interval(from: -5, to: 15))
-//            .share()
-//        debugView.bindTransformOperation(expandLeft.map { return .related($0) })
-//
-        
-        
-//        let focus = expandLeft
-//            .parallaxFocus(subinterval: .interval(from: 0, to: 10))
-//            .parallaxMorph(with: .just(.clampToUnitInterval))
-//            .share()
-//        debugView.bindTransformOperation(focus.map { return .focused($0) })
-//
-//        let oscillate = focus
-//            .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)))
-//            .share()
-//        debugView.bindTransformOperation(oscillate.map { return .morphed($0) })
-//
-//        oscillate
-//            .parallaxRelate(to: .interval(from: 10, to: 400 - 10))
-//            .parallaxValue()
-//            .bind(to: cursorConstraint.rx.constant)
-//            .disposed(by: disposeBag)
     }
 }
 // Present the view controller in the Live View window
