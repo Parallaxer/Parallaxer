@@ -46,7 +46,7 @@
 		8466489A226D2D0300214770 /* ParallaxIntervalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxIntervalTests.swift; sourceTree = "<group>"; };
 		8466489B226D2D0300214770 /* ParallaxableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxableTests.swift; sourceTree = "<group>"; };
 		8466489D226D2D0300214770 /* ParallaxCurveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxCurveTests.swift; sourceTree = "<group>"; };
-		8474D03E259AA5B7005300E7 /* Example.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Example.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		8474D03E259AA5B7005300E7 /* Visualizer.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Visualizer.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8482B2EE234710A900592858 /* ParallaxTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxTransformTests.swift; sourceTree = "<group>"; };
 		84A8284022AF0B610094E40F /* RxParallaxTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxParallaxTransformTests.swift; sourceTree = "<group>"; };
 		AA465713D640469C7CCFF889 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,7 +152,7 @@
 		8474D03D259AA578005300E7 /* Playgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				8474D03E259AA5B7005300E7 /* Example.playground */,
+				8474D03E259AA5B7005300E7 /* Visualizer.playground */,
 			);
 			path = Playgrounds;
 			sourceTree = "<group>";
