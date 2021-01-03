@@ -107,7 +107,7 @@ public final class ParallaxView: UIView {
     }
 }
 
-/// Internal class for rending a single transform.
+/// Internal class for rendering a single transform.
 final class ParallaxTransformView: UIView {
     
     private struct Constants {
