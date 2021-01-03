@@ -10,7 +10,7 @@ extension ObservableType where Element: Parallaxable {
     /// any of the following operators:
     ///   - `parallaxRelate(to:)`
     ///   - `parallaxMorph(with:)`
-    ///   - `parallaxFocus(subinterval:)`
+    ///   - `parallaxFocus(on:)`
     ///
     /// A parallax transform can be converted back into a value suitable for the user interface with the
     /// following operator:

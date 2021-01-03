@@ -17,7 +17,7 @@ public enum TransformOperation<ValueType: Parallaxable> {
 /// let parallax = slider.rx.value
 ///     .parallax(over: .interval(from: slider.minimumValue, to: slider.maximumValue), visualizer: visualizer)
 ///     .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: visualizer)
-///     .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: visualizer)
+///     .parallaxFocus(on: .interval(from: 0, to: 10), visualizer: visualizer)
 ///     .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: visualizer)
 ///     .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)), visualizer: visualizer)
 /// ```

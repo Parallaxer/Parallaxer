@@ -19,13 +19,13 @@ extension ObservableType {
         }
     }
 
-    /// Create a new parallax transform which scales `parallaxValue` such that it is relative to the
-    /// receiver's unit position, but on the given `otherInterval`, and is of type, `ResultValueType`.
+    /// Transform the receiver such that the resulting value is proportional to the given `newInterval`, and
+    /// is of type `ResultValueType`.
     ///
     /// # Resulting transform characteristics:
-    ///   - The interval is the given `otherInterval`.
-    ///   - The receiver's unit position is preserved.
-    ///   - `parallaxValue` is relative to the receiver's unit position, but on the given `otherInterval`, and
+    ///   - The interval is the given `newInterval`.
+    ///   - The receiver's position is preserved.
+    ///   - `parallaxValue` is relative to the receiver's position, but on the given `newInterval`, and
     ///     is of type, `ResultValueType`.
     ///
     /// # Ex: Relate values from a Double-typed interval [0, 3], to a CGFloat-typed interval, [0, 6]:
@@ -43,29 +43,27 @@ extension ObservableType {
     ///     let result = receiver
     ///         .parallaxRelate(to: ParallaxInterval<CGFloat>.rx.interval(from: 0, to: 6))
     ///
-    /// - Parameter otherInterval: The interval of the resulting transform.
-    /// - Returns: A new parallax transform, with a `parallaxValue` relative to the receiver's unit position,
-    ///  but on the given `otherInterval`, and of type, `ResultValueType`.
+    /// - Parameter newInterval: The interval of the resulting transform.
+    /// - Returns: A new parallax transform, with a `parallaxValue` relative to the receiver's position,
+    ///  but on the given `newInterval`, and of type, `ResultValueType`.
     public func parallaxRelate<ValueType, ResultValueType>(
-        to otherInterval: Observable<ParallaxInterval<ResultValueType>>)
+        to newInterval: Observable<ParallaxInterval<ResultValueType>>)
         -> Observable<ParallaxTransform<ResultValueType>>
         where Element == ParallaxTransform<ValueType>
     {
         return Observable
-            .combineLatest(self, otherInterval)
-            .map { transform, otherInterval in
-                return transform.relate(to: otherInterval)
+            .combineLatest(self, newInterval)
+            .map { transform, newInterval in
+                return transform.relate(to: newInterval)
             }
     }
 
-    /// Create a new parallax transform which alters the receiver's unit position in accordance with the given
-    /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
-    /// receiver's interval.
+    /// Transform the receiver such that the resulting position respects the given `curve` function.
     ///
     /// # Resulting transform characteristics:
     ///   - The receiver's interval is preserved.
-    ///   - The unit position has changed in accordance with the curve function.
-    ///   - `parallaxValue` is relative to the new unit position, on the receiver's interval.
+    ///   - The position has changed in accordance with the curve function.
+    ///   - `parallaxValue` is relative to the new position, on the receiver's interval.
     ///
     /// # Ex: Morph such that values are clamped to interval, [0, 3]:
     ///     // receiving transform:
@@ -82,9 +80,9 @@ extension ObservableType {
     ///     let result = receiver
     ///         .parallaxMorph(with: .just(.clampToUnitInterval))
     ///
-    /// - Parameter curve: The curve with which to alter the receiver's unit position.
-    /// - Returns: A new parallax transform, with the receiver's unit position transformed by the given
-    /// `curve` function; the resulting `parallaxValue` is relative to this new unit position, on the
+    /// - Parameter curve: The curve with which to alter the receiver's position.
+    /// - Returns: A new parallax transform, with the receiver's position transformed by the given
+    /// `curve` function; the resulting `parallaxValue` is relative to this new position, on the
     /// receiver's interval.
     public func parallaxMorph<ValueType>(
         with curve: Observable<PositionCurve>)
@@ -98,14 +96,12 @@ extension ObservableType {
             }
     }
 
-    /// Create a new parallax transform which preserves the receiver's `parallaxValue`, but alters its unit
-    /// position such that it corresponds to the given `subinterval`.
-    ///
-    /// - Note: `subinterval` need not be a strict subset of the receiver's interval.
+    /// Transform the receiver such that the resulting position reflects progress over a portion of the
+    /// receiver's interval, given by `subinterval`.
     ///
     /// # Resulting transform characteristics:
     ///   - The interval is `subinterval`.
-    ///   - The unit position has changed such that the receiver's `parallaxValue` is preserved.
+    ///   - The position has changed such that the receiver's `parallaxValue` is preserved.
     ///   - The receiver's `parallaxValue` is preserved.
     ///
     /// # Ex: Focus the subinterval, [2, 4]:
@@ -121,13 +117,13 @@ extension ObservableType {
     ///     //   -1   -.5     0    .5     1    result position: -.5
     ///     //    0    (1)    2     3     4    result value: 1 (unchanged)
     ///     let result = receiver
-    ///         .parallaxFocus(subinterval: .interval(from: 2, to: 4))
+    ///         .parallaxFocus(on: .interval(from: 2, to: 4))
     ///
-    /// - Parameter subinterval: A subset of the receiver's interval.
-    /// - Returns: A new parallax transform such that `parallaxValue` is unchanged, but now relative to the
-    /// resulting unit position, on the specified `subinterval`.
+    /// - Parameter subinterval: The interval of the resulting transform.
+    /// - Returns: A new parallax transform which maps the receiver's `parallaxValue` to the same value, but
+    /// on the given `subinterval`.
     public func parallaxFocus<ValueType>(
-        subinterval: Observable<ParallaxInterval<ValueType>>)
+        on subinterval: Observable<ParallaxInterval<ValueType>>)
         -> Observable<ParallaxTransform<ValueType>>
         where Element == ParallaxTransform<ValueType>
     {

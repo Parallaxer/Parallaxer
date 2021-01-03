@@ -64,7 +64,7 @@ final class RxParallaxTransformTests: XCTestCase {
 
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
-            .parallaxFocus(subinterval: .interval(from: 2, to: 4))
+            .parallaxFocus(on: .interval(from: 2, to: 4))
             .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
 
@@ -82,7 +82,7 @@ final class RxParallaxTransformTests: XCTestCase {
 
         let parallax = Observable.from(input)
             .parallax(over: .interval(from: 0, to: 4))
-            .parallaxFocus(subinterval: .interval(from: 2, to: 4))
+            .parallaxFocus(on: .interval(from: 2, to: 4))
             .parallaxMorph(with: .just(.clampToUnitInterval))
             .parallaxRelate(to: .interval(from: 0, to: 100))
             .parallaxValue()
@@ -167,7 +167,7 @@ extension RxParallaxTransformTests {
             .parallax(over: .interval(from: 0, to: 4))
 
         let result = receiver
-            .parallaxFocus(subinterval: .interval(from: 2, to: 4))
+            .parallaxFocus(on: .interval(from: 2, to: 4))
             .parallaxValue()
 
         XCTAssertEqual(try result.toBlocking().first(), 1)

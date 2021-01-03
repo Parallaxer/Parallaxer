@@ -35,29 +35,29 @@ extension ObservableType {
     {
         
         let newTransform = parallaxMorph(with: curve)
-        let visualized = Observable
+        let transformOperation = Observable
             .combineLatest(newTransform, curve)
             .map { transform, curve in
                 return TransformOperation.morphed(transform, curve)
             }
-        visualizer.visualize(visualized)
+        visualizer.visualize(transformOperation)
         return newTransform
     }
 
     public func parallaxFocus<ValueType>(
-        subinterval: Observable<ParallaxInterval<ValueType>>,
+        on subinterval: Observable<ParallaxInterval<ValueType>>,
         visualizer: ParallaxView)
         -> Observable<ParallaxTransform<ValueType>>
         where Element == ParallaxTransform<ValueType>
     {
         let transformBefore = self
-        let transformAfter = parallaxFocus(subinterval: subinterval)
-        let visualized = Observable
+        let transformAfter = parallaxFocus(on: subinterval)
+        let transformOperation = Observable
             .combineLatest(transformBefore, transformAfter)
             .map { transformBefore, transformAfter in
                 return TransformOperation.focused(transformBefore, transformAfter)
             }
-        visualizer.visualize(visualized)
+        visualizer.visualize(transformOperation)
         return transformAfter
     }
 }

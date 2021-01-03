@@ -16,7 +16,7 @@ pod 'Parallaxer'
 
 ## Overview
 
-Parallaxer makes it simple to establish relationships between changing values in your application; 
+Parallaxer makes it easy to establish relationships between changing values in your application; 
 use it to build delightful animations and tight controller interactions.
 
 ### Example use-cases
@@ -48,7 +48,7 @@ position would then indicate where you are in relation to your journey.
 As you leave your home, the transform's position is 0, and when you reach the office, the position is 1. 
 Each landmark along your commute is represented by a different position between 0 and 1.
 
-Parallax operators alter a transform's interval and/or its unit position. Each operation results 
+Parallax operators alter a transform's interval and/or its position. Each operation results 
 in a new transform which preserves some property of the original.
 
 #### Operators:
@@ -112,15 +112,15 @@ We can calculate `scrollingInterval` like so:
 
 #### Finally, relate these intervals to each other:
 
-Whenever scrolling occurs, the content offset must be transformed into a scroll-indicator position. (If you guessed 
-that `ParallaxTransform` can help with that, then please enjoy this freshly rendered cookie: 🍪.)
+Whenever scrolling occurs, the indicator's position on the screen needs to change; `ParallaxTransform` can 
+help with that.
 ```Swift
 // Create a transform representing the content offset of the scroll view.
 let scrollingTransform = ParallaxTransform(
     interval: scrollingInterval,
     parallaxValue: scrollView.contentOffset.y)
 
-// Relate the indicator's position to the scrolling transform.
+// Relate the scrolling transform to the indicator's position.
 let indicatorPositionTransform = scrollingTransform
     .relate(to: indicatorPositionInterval)
 ```
@@ -148,14 +148,17 @@ override func viewDidLoad() {
     // Determine the indicator's position interval, over which the indicator can move.
     let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
 
-    // Relate the indicator's position to the scrolling transform.
+    // Relate the scrolling transform to the indicator's position.
     let indicatorPositionTransform = scrollingTransform
         .parallaxRelate(to: indicatorPositionInterval)
 
     // Finally, bind the indicator parallax value to the image view's center point.
     indicatorPositionTransform
         .parallaxValue()
-        .subscribe(onNext: { [unowned self] positionY in
+        .subscribe(onNext: { [weak self] positionY in
+            guard let self = self else {
+                return
+            }
             self.indicatorImageView.center = CGPoint(
                 x: self.scrollIndicator.center.x
                 y: positionY)
