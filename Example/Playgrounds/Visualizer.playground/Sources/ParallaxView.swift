@@ -10,7 +10,17 @@ public enum TransformOperation<ValueType: Parallaxable> {
     case focused(ParallaxTransform<ValueType>, ParallaxTransform<ValueType>) // before transform, after transform.
 }
 
-/// Renders parallax operations.
+/// Use this view to visually debug parallax transforms.
+///
+/// ```
+/// let visualizer = ParallaxView()
+/// let parallax = slider.rx.value
+///     .parallax(over: .interval(from: slider.minimumValue, to: slider.maximumValue), visualizer: visualizer)
+///     .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: visualizer)
+///     .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: visualizer)
+///     .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: visualizer)
+///     .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)), visualizer: visualizer)
+/// ```
 public final class ParallaxView: UIView {
     
     private lazy var stackView: UIStackView = {
@@ -29,6 +39,8 @@ public final class ParallaxView: UIView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = .white
         
         addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true

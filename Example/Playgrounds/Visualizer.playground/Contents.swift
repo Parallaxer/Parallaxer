@@ -6,83 +6,33 @@ import RxSwift
 import RxCocoa
 import UIKit
 
+// MARK: Static visualization.
+
+let visualizer = ParallaxView(frame: CGRect(x: 0, y: 0, width: 400, height: 550))
+
+let parallax = Observable.just(7)
+    .parallax(over: .interval(from: 0, to: 10), visualizer: visualizer)
+    .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: visualizer)
+    .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: visualizer)
+    .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: visualizer)
+    .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)), visualizer: visualizer)
+
+visualizer
 
 
-class MyViewController : UIViewController {
-    
-    private lazy var cursorView: UIView = {
-        let cursorView = UIView()
-        cursorView.translatesAutoresizingMaskIntoConstraints = false
-        cursorView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        cursorView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        cursorView.backgroundColor = UIColor.blue
-        cursorView.alpha = 0
-        return cursorView
-    }()
-    
-    private lazy var slider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.isContinuous = true
-        slider.minimumValue = 0
-        slider.maximumValue = 100
-        slider.backgroundColor = .blue
-        return slider
-    }()
-    
-    private lazy var debugView: ParallaxView = {
-        let debugView = ParallaxView()
-        debugView.translatesAutoresizingMaskIntoConstraints = false
-        return debugView
-    }()
-    
-    private var cursorConstraint: NSLayoutConstraint!
-    
-    private let disposeBag = DisposeBag()
-    
-    private let backgroundScheduler = SerialDispatchQueueScheduler(qos: .userInteractive)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        view.addSubview(slider)
-        slider.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        slider.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        slider.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        slider.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-        view.addSubview(debugView)
-        debugView.topAnchor.constraint(equalTo: slider.bottomAnchor).isActive = true
-        debugView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        debugView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-        view.addSubview(cursorView)
-        cursorView.topAnchor.constraint(equalTo: debugView.bottomAnchor).isActive = true
-        cursorConstraint = cursorView.centerXAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor)
-        cursorConstraint.isActive = true
-        cursorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        observeTestTransform()
-    }
-    
-    func observeTestTransform() {
-        let parallax = slider.rx.value
-            .parallax(over: .interval(from: slider.minimumValue, to: slider.maximumValue), visualizer: debugView)
-            .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: debugView)
-            .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: debugView)
-            .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: debugView)
-            .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)), visualizer: debugView)
-            
-        parallax
-            .parallaxRelate(to: .interval(from: 10, to: 400 - 10))
-            .parallaxValue()
-            .bind(to: cursorConstraint.rx.constant)
-            .disposed(by: disposeBag)
-    }
-}
-// Present the view controller in the Live View window
-let viewController = MyViewController()
-viewController.view.frame = .init(x: 0, y: 0, width: 400, height: 800)
-PlaygroundPage.current.liveView = viewController
+// MARK: Interactive visualization (Make sure the "live view" is visible.)
+
+let interactiveView = InteractiveParallaxView(frame: CGRect(x: 0, y: 0, width: 400, height: 800))
+
+let sliderInterval = Observable<ParallaxInterval<Float>>.interval(
+    from: interactiveView.slider.minimumValue,
+    to: interactiveView.slider.maximumValue)
+
+let parallax2 = interactiveView.slider.rx.value
+    .parallax(over: sliderInterval, visualizer: interactiveView.visualizer)
+    .parallaxRelate(to: .interval(from: -5, to: 15), visualizer: interactiveView.visualizer)
+    .parallaxFocus(subinterval: .interval(from: 0, to: 10), visualizer: interactiveView.visualizer)
+    .parallaxMorph(with: .just(.clampToUnitInterval), visualizer: interactiveView.visualizer)
+    .parallaxMorph(with: .just(.oscillate(numberOfTimes: 3)), visualizer: interactiveView.visualizer)
+
+PlaygroundPage.current.liveView = interactiveView
