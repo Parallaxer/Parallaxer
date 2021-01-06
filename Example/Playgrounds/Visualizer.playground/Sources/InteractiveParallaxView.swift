@@ -4,6 +4,12 @@ import RxCocoa
 import UIKit
 
 public final class InteractiveParallaxView: UIView {
+    
+    private struct Constants {
+        
+        static let sliderBackgroundColor = UIColor(red: 32/255, green: 203/255, blue: 204/255, alpha: 1)
+        static let sliderFillColor = UIColor(red: 32/255, green: 203/255, blue: 204/255, alpha: 1)
+    }
 
     public let slider: UISlider = {
         let slider = UISlider()
@@ -11,7 +17,9 @@ public final class InteractiveParallaxView: UIView {
         slider.isContinuous = true
         slider.minimumValue = 0
         slider.maximumValue = 100
-        slider.backgroundColor = .blue
+        slider.backgroundColor = UIColor(red: 29/255, green: 33/255, blue: 38/255, alpha: 1)
+        slider.tintColor = UIColor(red: 127/255, green: 128/255, blue: 129/255, alpha: 1)
+        slider.thumbTintColor = Constants.sliderBackgroundColor
         return slider
     }()
 

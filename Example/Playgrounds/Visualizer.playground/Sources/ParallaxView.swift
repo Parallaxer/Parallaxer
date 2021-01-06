@@ -40,7 +40,7 @@ public final class ParallaxView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = UIColor(red: 29/255, green: 33/255, blue: 38/255, alpha: 1)
         
         addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -58,35 +58,24 @@ public final class ParallaxView: UIView {
     {
         let title = operation
             .map { operation -> String in
-                let formatPosition = { (position: Double) -> String in
-                    let positionInterval = try! ParallaxInterval(from: 0, to: 1)
-                    let positionTransform = ParallaxTransform(
-                        interval: positionInterval,
-                        parallaxValue: position)
-                    let percentageInterval = try! ParallaxInterval(from: 0, to: 100)
-                    let percentageValue = positionTransform
-                        .relate(to: percentageInterval)
-                        .parallaxValue()
-                    return "\(Int(percentageValue))%"
-                }
                 switch operation {
                 
                 case .started(let transform):
-                    return "parallax: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                    return "parallax over: \(transform.interval)"
                 case .related(let transform):
-                    return "relate: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                    return "relate to: \(transform.interval)"
                 case .morphed(let transform, let curve):
-                    return "morph: \(curve)\nPosition: \(formatPosition(transform.position))"
+                    return "morph with: \(curve)"
                 case .focused(_, let transform):
-                    return "focus: \(transform.interval)\nPosition: \(formatPosition(transform.position))"
+                    return "focus on: \(transform.interval)"
                 }
             }
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = .blue
+        titleLabel.textColor = UIColor(red: 127/255, green: 128/255, blue: 129/255, alpha: 1)
         titleLabel.numberOfLines = 3
-        titleLabel.font = .monospacedSystemFont(ofSize: 16, weight: .semibold)
+        titleLabel.font = .monospacedSystemFont(ofSize: 14, weight: .semibold)
         
         let transformView = ParallaxTransformView()
         
@@ -112,12 +101,12 @@ final class ParallaxTransformView: UIView {
     
     private struct Constants {
         static let cursorSize = CGSize(width: 5, height: 20)
-        static let cursorColor = UIColor.blue
-        static let cursorOutOfBoundsColor = UIColor.red
+        static let cursorColor = UIColor(red: 32/255, green: 203/255, blue: 204/255, alpha: 1)
+        static let cursorOutOfBoundsColor = boundaryColor
         static let boundarySize = CGSize(width: 20, height: 20)
-        static let boundaryColor = UIColor.red
+        static let boundaryColor = UIColor(red: 247/255, green: 161/255, blue: 5/255, alpha: 1)
         static let rulerHeight = CGFloat(2)
-        static let rulerColor = UIColor.gray
+        static let rulerColor = UIColor(red: 104/255, green: 106/255, blue: 108/255, alpha: 1)
     }
     
     private let rulerView: UIView = {
@@ -255,13 +244,23 @@ final class ParallaxTransformView: UIView {
             .parallaxMorph(with: .just(.clampToUnitInterval))
             .parallaxValue()
         
-        let currentValue = transform
+        let cursorValue = transform
             .parallaxValue()
-            .map { return "\($0)"}
+        let cursorPercentage = transform
+            .parallaxRelate(to: .interval(from: 0, to: 100))
+            .parallaxValue()
+        
+        let cursorText = Observable
+            .combineLatest(
+                cursorValue,
+                cursorPercentage)
+            .map { value, percentage in
+                return "\(value) (\(Int(percentage))%)"
+            }
 
         return Disposables.create([
             cursorConstraintConstant.bind(to: cursorConstraint.rx.constant),
-            currentValue.bind(to: cursorLabel.rx.text)
+            cursorText.bind(to: cursorLabel.rx.text)
         ])
     }
     
