@@ -64,8 +64,8 @@ in a new transform which preserves some property of the original.
 
 ```Swift
 struct ParallaxInterval {
-    private let from: ValueType
-    private let to: ValueType
+    let from: ValueType
+    let to: ValueType
 }
 ```
 
@@ -78,9 +78,9 @@ A position curve affects how a position changes over the unit interval: [0, 1].
 
 ## Usage
 
-When envisioning a parallax effect, it helps to *think in terms of intervals*:
-  - First identify what is changing.
-  - Then determine the interval which best represents the boundary of that change. 
+When envisioning a parallax effect, it helps to "think in terms of intervals":
+  - What values are changing, how are they related?
+  - For each changing value, what interval best represents the boundary of that change?
 
 ### Example - Custom scroll indicator
 
@@ -90,14 +90,15 @@ content offset.
 
 How might we accomplish this with Parallaxer?
 
-#### First, identify what is changing:
+#### What values are changing, how are they related?
 
+There are two changing values worth noting:
 1) `UIScrollView.contentOffset` - Whenever the user slides their finger up or down on the scroll view, 
 the view's content offset changes accordingly.
 2) `UIImageView.center` - As the scroll view's content offset changes, so too shall the vertical position 
 of the scroll indicator.
 
-#### Next, determine parallax intervals for the changes we identified:
+#### What interval best represents the boundary of that change?
 
 1) The maximum scrollable distance allowed by a scroll view is a function of its content size and frame size. 
 We can calculate `scrollingInterval` like so:
@@ -107,10 +108,10 @@ We can calculate `scrollingInterval` like so:
     ```
 2) The scroll indicator shall travel up and down the full height of the scroll view's frame; this is straight-forward:
     ```Swift
-    let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
+    let indicatorInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
     ```
 
-#### Finally, relate these intervals to each other:
+#### Finally, relate these intervals to each other using transform operations:
 
 Whenever scrolling occurs, the indicator's position on the screen needs to change; `ParallaxTransform` can 
 help with that.
@@ -121,8 +122,8 @@ let scrollingTransform = ParallaxTransform(
     parallaxValue: scrollView.contentOffset.y)
 
 // Relate the scrolling transform to the indicator's position.
-let indicatorPositionTransform = scrollingTransform
-    .relate(to: indicatorPositionInterval)
+let indicatorTransform = scrollingTransform
+    .relate(to: indicatorInterval)
 ```
 
 #### Tie it all together:
@@ -145,15 +146,15 @@ override func viewDidLoad() {
         .map { return $0.y }
         .parallax(over: scrollingInterval)
 
-    // Determine the indicator's position interval, over which the indicator can move.
-    let indicatorPositionInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
+    // Determine the indicator interval, over which the indicator can move.
+    let indicatorInterval = ParallaxInterval(from: 0, to: scrollView.frame.height)
 
-    // Relate the scrolling transform to the indicator's position.
-    let indicatorPositionTransform = scrollingTransform
-        .parallaxRelate(to: indicatorPositionInterval)
+    // Relate the scrolling transform to the indicator.
+    let indicatorTransform = scrollingTransform
+        .parallaxRelate(to: indicatorInterval)
 
     // Finally, bind the indicator parallax value to the image view's center point.
-    indicatorPositionTransform
+    indicatorTransform
         .parallaxValue()
         .subscribe(onNext: { [weak self] positionY in
             guard let self = self else {
