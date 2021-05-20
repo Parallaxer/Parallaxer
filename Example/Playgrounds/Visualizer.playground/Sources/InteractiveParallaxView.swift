@@ -1,6 +1,5 @@
 import Parallaxer
 import RxSwift
-import RxCocoa
 import UIKit
 
 public final class InteractiveParallaxView: UIView {

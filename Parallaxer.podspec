@@ -21,7 +21,6 @@ Pod::Spec.new do |s|
   s.subspec "RxSwift" do |ss|
     ss.dependency "Parallaxer/Base"
     ss.dependency "RxSwift"
-    ss.dependency "RxCocoa"
     ss.source_files = "Sources/RxSwift/**/*.swift"
   end
 end
