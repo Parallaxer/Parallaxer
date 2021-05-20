@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Example
-//
-//  Created by Clifton Roberts on 4/21/19.
-//  Copyright © 2019 Clifton. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
