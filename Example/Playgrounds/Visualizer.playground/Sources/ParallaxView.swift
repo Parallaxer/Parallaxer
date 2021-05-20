@@ -64,7 +64,7 @@ public final class ParallaxView: UIView {
                     return "parallax over: \(transform.interval)"
                 case .related(let transform):
                     return "relate to: \(transform.interval)"
-                case .morphed(let transform, let curve):
+                case .morphed(_, let curve):
                     return "morph with: \(curve)"
                 case .focused(_, let transform):
                     return "focus on: \(transform.interval)"
