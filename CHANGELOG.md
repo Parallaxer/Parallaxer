@@ -16,8 +16,9 @@
 
 ### Breaking
 
-- Parallaxer is now fully integrated with RxSwift.
-
+- Parallaxer has been rewritten to support other value propagation architectures, and is now fully integrated with RxSwift.
+  [#12](https://github.com/Parallaxer/Parallaxer/pull/12)
+  
 ### Enhancements
 
 - None
