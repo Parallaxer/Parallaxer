@@ -8,7 +8,6 @@ target "Example" do
 
     # External pods.
     pod "RxSwift"
-    pod "RxCocoa"
 
   target "Tests" do
     inherit! :search_paths

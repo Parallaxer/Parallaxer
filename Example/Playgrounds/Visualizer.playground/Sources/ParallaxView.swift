@@ -1,6 +1,5 @@
 import Parallaxer
 import RxSwift
-import RxCocoa
 import UIKit
 
 public enum TransformOperation<ValueType: Parallaxable> {

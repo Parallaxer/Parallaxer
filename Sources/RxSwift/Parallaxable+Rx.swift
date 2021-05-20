@@ -1,5 +1,4 @@
 import RxSwift
-import RxCocoa
 
 extension ObservableType where Element: Parallaxable {
 
