@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B1793DAA06BF26963E02A22 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA465713D640469C7CCFF889 /* Pods_Example.framework */; };
 		459AA4B017AA8F5F9BE24B46 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD82554D6844B8B3F25FF332 /* Pods_Tests.framework */; };
+		84447FCF265E29CF003F1C84 /* CombineParallaxTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0E0FD265E28F20089FAC6 /* CombineParallaxTransformTests.swift */; };
 		8466486B226D2C8900214770 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466486A226D2C8900214770 /* AppDelegate.swift */; };
 		8466486D226D2C8900214770 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466486C226D2C8900214770 /* ViewController.swift */; };
 		84664870226D2C8900214770 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8466486E226D2C8900214770 /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 		848C41872656FE4800CB3DD8 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		848C41882656FE5900CB3DD8 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		84A8284022AF0B610094E40F /* RxParallaxTransformTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxParallaxTransformTests.swift; sourceTree = "<group>"; };
+		84B0E0FD265E28F20089FAC6 /* CombineParallaxTransformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineParallaxTransformTests.swift; sourceTree = "<group>"; };
 		AA465713D640469C7CCFF889 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA48578579D35836208D009 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C4B6401FC14CFB1BA88750A0 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,12 +91,12 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		8401DFEF2347D43600ED129E /* Rx */ = {
+		8401DFEF2347D43600ED129E /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
 				84A8284022AF0B610094E40F /* RxParallaxTransformTests.swift */,
 			);
-			path = Rx;
+			path = RxSwift;
 			sourceTree = "<group>";
 		};
 		8401EBFF23498493006E5D60 /* Base */ = {
@@ -111,9 +113,9 @@
 		8466485E226D2C8900214770 = {
 			isa = PBXGroup;
 			children = (
-				848C41872656FE4800CB3DD8 /* LICENSE.md */,
 				848C41862656FE4800CB3DD8 /* README.md */,
 				848C41882656FE5900CB3DD8 /* CHANGELOG.md */,
+				848C41872656FE4800CB3DD8 /* LICENSE.md */,
 				8474D03D259AA578005300E7 /* Playgrounds */,
 				84664869226D2C8900214770 /* Example */,
 				8466487E226D2C8A00214770 /* Tests */,
@@ -148,8 +150,9 @@
 		8466487E226D2C8A00214770 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				84B0E0FC265E28EB0089FAC6 /* Combine */,
 				8401EBFF23498493006E5D60 /* Base */,
-				8401DFEF2347D43600ED129E /* Rx */,
+				8401DFEF2347D43600ED129E /* RxSwift */,
 				84664881226D2C8A00214770 /* Info.plist */,
 			);
 			path = Tests;
@@ -161,6 +164,14 @@
 				8474D03E259AA5B7005300E7 /* Visualizer.playground */,
 			);
 			path = Playgrounds;
+			sourceTree = "<group>";
+		};
+		84B0E0FC265E28EB0089FAC6 /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				84B0E0FD265E28F20089FAC6 /* CombineParallaxTransformTests.swift */,
+			);
+			path = Combine;
 			sourceTree = "<group>";
 		};
 		B9FCEE3C41115F6981C0546F /* Frameworks */ = {
@@ -370,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8466489F226D2D0400214770 /* ParallaxableTests.swift in Sources */,
+				84447FCF265E29CF003F1C84 /* CombineParallaxTransformTests.swift in Sources */,
 				8482B2EF234710A900592858 /* ParallaxTransformTests.swift in Sources */,
 				8466489E226D2D0400214770 /* ParallaxIntervalTests.swift in Sources */,
 				846648A1226D2D0400214770 /* ParallaxCurveTests.swift in Sources */,
@@ -566,6 +578,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -586,6 +599,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

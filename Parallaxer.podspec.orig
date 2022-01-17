@@ -23,7 +23,11 @@ Pod::Spec.new do |s|
     ss.dependency "RxSwift"
     ss.source_files = "Sources/RxSwift/**/*.swift"
   end
+<<<<<<< Updated upstream
   
+=======
+
+>>>>>>> Stashed changes
   ### Combine integration
   s.subspec "Combine" do |ss|
     ss.dependency "Parallaxer/Base"
