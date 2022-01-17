@@ -4,7 +4,7 @@ target "Example" do
   use_frameworks!
 
     # Internal pods.
-    pod "Parallaxer", :path => "../"
+    pod "Parallaxer", :subspecs => ['RxSwift', 'Combine'], :path => "../"
 
     # External pods.
     pod "RxSwift"
